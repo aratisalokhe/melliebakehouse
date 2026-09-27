@@ -26,6 +26,14 @@ const DATABASE_URL = (process.env.DATABASE_URL || '').trim();
 const DATABASE_AUTH_TOKEN = (process.env.DATABASE_AUTH_TOKEN || '').trim();
 const ON_VERCEL = process.env.VERCEL === '1';
 
+// Boot diagnostics, surfaced by /api/health so deployment issues are obvious:
+//  env: which variables the process actually received (booleans only — no secrets)
+//  cloudError: why the Turso connection failed, if it did
+const dbDiag = {
+  env: { urlSet: DATABASE_URL.length > 0, tokenSet: DATABASE_AUTH_TOKEN.length > 0 },
+  cloudError: null,
+};
+
 function dirIsWritable(dir) {
   try {
     const probe = path.join(dir, '.db-write-test');
@@ -56,7 +64,8 @@ if (DATABASE_URL && !DATABASE_URL.startsWith('file:')) {
       dbMode = 'turso';
       console.log('[db] Connected to the Turso cloud database.');
     } catch (err) {
-      console.error('[db] CLOUD DATABASE CONNECTION FAILED:', String((err && err.message) || err));
+      dbDiag.cloudError = String((err && err.message) || err).slice(0, 300);
+      console.error('[db] CLOUD DATABASE CONNECTION FAILED:', dbDiag.cloudError);
       console.error('[db] Check DATABASE_URL (must start with libsql://) and DATABASE_AUTH_TOKEN in your host\'s environment variables, then redeploy.');
       // fall through to local fallbacks below — the site still works
     }
@@ -215,3 +224,4 @@ try {
 
 module.exports = db;
 module.exports.dbMode = dbMode;
+module.exports.dbDiag = dbDiag;

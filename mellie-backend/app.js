@@ -54,9 +54,17 @@ app.get('/api/health', (_req, res) => {
   // dbMode tells you at a glance how the deployment is storing data:
   //   turso         → cloud DB connected (correct for a hosted site)
   //   local-file    → normal local development
-  //   tmp-ephemeral → hosted but DATABASE_URL/DATABASE_AUTH_TOKEN not set (data resets!)
-  //   memory        → last-resort fallback (also means env vars are missing)
-  res.json({ status: 'ok', time: new Date().toISOString(), dbMode: require('./db').dbMode || 'unknown' });
+  //   tmp-ephemeral → hosted but Turso not connected (data resets!)
+  //   memory        → last-resort fallback
+  // diagnostics shows WHY: whether the env vars reached the function at all,
+  // and if they did, the exact error the Turso connection produced.
+  const db = require('./db');
+  res.json({
+    status: 'ok',
+    time: new Date().toISOString(),
+    dbMode: db.dbMode || 'unknown',
+    diagnostics: db.dbDiag || null,
+  });
 });
 
 app.get('/api/images-version', (_req, res) => {
