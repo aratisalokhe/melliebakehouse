@@ -40,23 +40,34 @@ function dirIsWritable(dir) {
 let db;
 let dbMode;
 
+// ---- Attempt 1: Turso cloud (libsql 0.5.x positional API: new Database(url, token))
+// (The object form { url, authToken } throws "failed to downcast any to string" on
+// this version — do not "fix" it back.)
 if (DATABASE_URL && !DATABASE_URL.startsWith('file:')) {
   if (!DATABASE_AUTH_TOKEN) {
     console.warn('[db] DATABASE_URL is set but DATABASE_AUTH_TOKEN is missing — ignoring the cloud DB. Add the token, then redeploy.');
   } else {
     try {
-      db = new Database({ url: DATABASE_URL, authToken: DATABASE_AUTH_TOKEN });
+      const cloud = new Database(DATABASE_URL, DATABASE_AUTH_TOKEN);
+      // Force a real round-trip NOW: construction is lazy, so a bad URL/token
+      // only surfaces on the first query. Better to know at boot.
+      cloud.prepare('SELECT 1 AS ok').get();
+      db = cloud;
       dbMode = 'turso';
+      console.log('[db] Connected to the Turso cloud database.');
     } catch (err) {
-      console.warn('[db] Could not open the cloud database:', err && err.message ? err.message : err);
+      console.error('[db] CLOUD DATABASE CONNECTION FAILED:', String((err && err.message) || err));
+      console.error('[db] Check DATABASE_URL (must start with libsql://) and DATABASE_AUTH_TOKEN in your host\'s environment variables, then redeploy.');
+      // fall through to local fallbacks below — the site still works
     }
   }
 }
 
+// ---- Attempt 2/3/4: local file → /tmp → memory (never crash the app)
 if (!db) {
   const repoDir = __dirname;
   if (dirIsWritable(repoDir)) {
-    db = new Database(DATABASE_URL ? DATABASE_URL : 'file:' + path.join(repoDir, 'bakery.db'));
+    db = new Database('file:' + path.join(repoDir, 'bakery.db'));
     dbMode = 'local-file';
   } else if (dirIsWritable('/tmp')) {
     db = new Database('file:/tmp/mellie-bakery.db');
