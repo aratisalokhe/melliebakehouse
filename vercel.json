@@ -1,0 +1,14 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "functions": {
+    "mellie-backend/api/index.js": {
+      "includeFiles": "mellie-backend/{index.html,admin-app/**,public/**,routes/**,middleware/**,db.js,package.json}"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/mellie-backend/api/index.js"
+    }
+  ]
+}

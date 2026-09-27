@@ -6,11 +6,7 @@
     "api/index.js": {
       "memory": 1024,
       "maxDuration": 30,
-      "includeFiles": [
-        "index.html",
-        "admin-app/**",
-        "public/images/**"
-      ]
+      "includeFiles": "{index.html,admin-app/**,public/images/**}"
     }
   }
 }

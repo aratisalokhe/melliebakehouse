@@ -77,6 +77,19 @@ same email/password you set in the environment variables.
 
 ## Troubleshooting the deployment
 
+**"This page doesn't exist — 404 NOT_FOUND" (Vercel's own dark error page)**
+
+This means Vercel deployed **without finding the serverless function** — the project's
+Root Directory was not set to `mellie-backend`. Fix in the Vercel dashboard:
+
+1. Your project → **Settings** → **General** → **Root Directory** → set it to
+   `mellie-backend` → Save
+2. **Deployments** → latest deployment → **⋯ menu → Redeploy**
+
+(The repo also has a root-level `vercel.json` safety net that routes to
+`mellie-backend/api/index` even if the root directory is left wrong — but setting
+the Root Directory properly is the clean fix.)
+
 **"This page is unavailable — a function needed by this page temporarily failed"**
 (the error from the screenshot):
 
