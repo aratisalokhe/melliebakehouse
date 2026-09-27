@@ -14,26 +14,29 @@ router.post('/', attachUser, (req, res) => {
     return res.status(400).json({ error: 'name, email and details are required.' });
   }
 
+  // Positional params: libsql 0.5's remote (Hrana) path mishandles a null in
+  // named-object params (guest bookings pass user_id: null) and 500s, while
+  // the same insert works fine locally. Positional avoids that entirely.
   const info = db
     .prepare(
       `INSERT INTO custom_cake_requests
          (user_id, name, email, phone, occasion, design, flavor, toppings, size, budget, needed_by, details)
-       VALUES (@user_id, @name, @email, @phone, @occasion, @design, @flavor, @toppings, @size, @budget, @needed_by, @details)`
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
     )
-    .run({
-      user_id: req.user ? req.user.id : null,
-      name: String(name).trim(),
-      email: String(email).trim().toLowerCase(),
-      phone: phone ? String(phone).trim() : '',
-      occasion: occasion || '',
-      design: design || '',
-      flavor: flavor || '',
-      toppings: toppings || '',
-      size: size || '',
-      budget: budget || '',
-      needed_by: needed_by || '',
-      details: String(details).trim(),
-    });
+    .run(
+      req.user ? req.user.id : null,
+      String(name).trim(),
+      String(email).trim().toLowerCase(),
+      phone ? String(phone).trim() : '',
+      occasion || '',
+      design || '',
+      flavor || '',
+      toppings || '',
+      size || '',
+      budget || '',
+      needed_by || '',
+      String(details).trim()
+    );
 
   const request = db.prepare('SELECT * FROM custom_cake_requests WHERE id = ?').get(info.lastInsertRowid);
   res.status(201).json({ request });
