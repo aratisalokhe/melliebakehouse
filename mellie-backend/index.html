@@ -1217,14 +1217,23 @@
 
     /* ---------- POLISHED ANIMATION LAYER ---------- */
     /* Staggered entrances: cards cascade in once their grid has revealed.
-       Only applies when the grid was armed AND revealed — otherwise cards are
-       simply visible. Card classes in this site: .card (products), .cat-card, .cake-thumb,
+       Runs ONCE: the .did-enter guard stops re-renders (live image sync re-renders
+       every 10s) from replaying the entrance and flashing cards invisible. Card classes in this site: .card (products), .cat-card, .cake-thumb,
        .insta-item — plus reveal-on-scroll handled by .reveal/.in */
     .reveal.in .card,
     .reveal.in .cat-card,
     .reveal.in .cake-thumb,
     .reveal.in .insta-item {
       animation: cardIn 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+    /* The entrance runs ONCE: after it finishes, JS tags the grid .did-enter
+       so later DOM refreshes (live image sync) can never replay it — otherwise
+       cards flash invisible every re-render on slow mobile connections. */
+    .reveal.did-enter .card,
+    .reveal.did-enter .cat-card,
+    .reveal.did-enter .cake-thumb,
+    .reveal.did-enter .insta-item {
+      animation: none;
     }
     /* Un-armed grids (JS/observer unavailable): cards always fully visible */
     .reveal:not(.js-armed) .card,
@@ -2767,8 +2776,15 @@
       const instaTiles = ['cake', 'cupcake', 'croissant', 'pastry', 'tart', 'cookie'];
 
       // ---------- Render products ----------
+      let lastRenderedKey = '';
       function renderProducts() {
         const grid = document.getElementById('productGrid');
+        // Skip no-op re-renders: the 10s live-image poll used to replace all the
+        // cards' DOM every cycle, which replayed their entrance animation and
+        // flashed the whole section invisible on slow mobile connections.
+        const key = products.map(p => p.id + ':' + (p.photoUrl || '') + ':' + p.price).join('|');
+        if (key === lastRenderedKey && grid.children.length) return;
+        lastRenderedKey = key;
         grid.innerHTML = products.map(p => `
       <div class="card">
         <div class="card-media">
@@ -2889,7 +2905,14 @@
       const io = ('IntersectionObserver' in window)
         ? new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-              if (entry.isIntersecting) { entry.target.classList.add('in'); io.unobserve(entry.target); }
+              if (entry.isIntersecting) {
+                entry.target.classList.add('in');
+                io.unobserve(entry.target);
+                // Entrance animation plays once; tag it done shortly after the
+                // longest delay+duration so refreshes never replay it.
+                const el = entry.target;
+                setTimeout(() => el.classList.add('did-enter'), 1400);
+              }
             });
           }, { threshold: 0, rootMargin: '0px 0px -8% 0px' })
         : null;
@@ -2912,7 +2935,7 @@
           revealEls.forEach(el => {
             const rect = el.getBoundingClientRect();
             const alreadyInView = rect.top < vh * 0.92; // above-the-fold: never hide
-            if (alreadyInView) { el.classList.add('in'); return; }
+            if (alreadyInView) { el.classList.add('in', 'did-enter'); return; }
             el.classList.add('js-armed');
             io.observe(el);
           });
@@ -2920,7 +2943,10 @@
           setInterval(() => {
             document.querySelectorAll('.reveal.js-armed:not(.in)').forEach(el => {
               const r = el.getBoundingClientRect();
-              if (r.top < window.innerHeight * 0.96) el.classList.add('in');
+              if (r.top < window.innerHeight * 0.96) {
+                el.classList.add('in');
+                setTimeout(() => el.classList.add('did-enter'), 1400);
+              }
             });
           }, 1200);
         }, 120);
