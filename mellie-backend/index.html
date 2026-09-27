@@ -1,0 +1,2718 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description"
+    content="Mellie Bakehouse — design and book your dream cake online. Fresh croissants, cupcakes, tarts and custom celebration cakes, handmade in small batches.">
+  <meta name="theme-color" content="#FFF8F0">
+  <meta property="og:title" content="Mellie Bakehouse — Design & Book Your Dream Cake">
+  <meta property="og:description"
+    content="Design and book your dream cake online — flavors, designs and toppings made just for you.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="/images/hero_vintage_cake_v2.jpg">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎂</text></svg>">
+  <title>Mellie Bakehouse — Design & Book Your Dream Cake</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Nunito+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --cream: #FFF8F0;
+      --cream-2: #FCF2E7;
+      --blush: #F7D9D0;
+      --strawberry: #EFAFA8;
+      --brown: #6B4636;
+      --choc: #3E2922;
+      --sage: #DDE6D5;
+      --white: #FFFFFF;
+      --ink: var(--choc);
+      --bg: var(--cream);
+      --card-bg: var(--white);
+      --shadow: 0 18px 40px -20px rgba(62, 41, 34, 0.28);
+      --shadow-soft: 0 10px 24px -14px rgba(62, 41, 34, 0.22);
+      --radius-lg: 28px;
+      --radius-md: 22px;
+      --radius-sm: 14px;
+      --serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+      --sans: 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      box-sizing: border-box;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+      color-scheme: light;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: calc(84px + env(safe-area-inset-top, 0px));
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    img,
+    svg {
+      max-width: 100%;
+      display: block;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      background: none;
+      color: inherit;
+    }
+
+    input {
+      font-family: inherit;
+    }
+
+    h1,
+    h2,
+    h3,
+    .display {
+      font-family: var(--serif);
+      font-weight: 600;
+      color: var(--brown);
+      letter-spacing: 0.01em;
+    }
+
+    .wrap {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    section {
+      position: relative;
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--strawberry);
+      outline-offset: 3px;
+      border-radius: 6px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 15px 30px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.96rem;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+      white-space: nowrap;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: var(--brown);
+      color: var(--cream);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .btn-primary:hover {
+      background: var(--choc);
+      box-shadow: var(--shadow);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--brown);
+      border: 1.5px solid var(--brown);
+    }
+
+    .btn-secondary:hover {
+      background: var(--brown);
+      color: var(--cream);
+    }
+
+    .btn-sm {
+      padding: 10px 18px;
+      font-size: 0.84rem;
+    }
+
+    /* ---------- NAVBAR ---------- */
+    header.nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 200;
+      padding: calc(env(safe-area-inset-top, 0px) + 18px) 0 18px;
+      transition: background 0.35s ease, box-shadow 0.35s ease, padding 0.35s ease;
+    }
+
+    header.nav .wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    header.nav.scrolled {
+      background: rgba(255, 248, 240, 0.82);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 10px 30px -20px rgba(62, 41, 34, 0.35);
+      padding-top: calc(env(safe-area-inset-top, 0px) + 10px);
+      padding-bottom: 10px;
+    }
+
+    .logo {
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+    }
+
+    .logo .m {
+      font-family: var(--serif);
+      font-size: 1.7rem;
+      font-weight: 600;
+      color: var(--brown);
+    }
+
+    .logo .b {
+      font-size: 0.6rem;
+      letter-spacing: 0.32em;
+      color: var(--strawberry);
+      font-weight: 700;
+      margin-top: 3px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 34px;
+    }
+
+    .nav-links a {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--brown);
+      position: relative;
+      padding: 4px 0;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -2px;
+      height: 2px;
+      width: 0;
+      background: var(--strawberry);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .icon-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--brown);
+      position: relative;
+      transition: background 0.25s ease, transform 0.2s ease;
+    }
+
+    .icon-btn:hover {
+      background: var(--blush);
+      transform: translateY(-1px);
+    }
+
+    .icon-btn svg {
+      width: 19px;
+      height: 19px;
+    }
+
+    .badge-count {
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      background: var(--strawberry);
+      color: var(--choc);
+      font-size: 0.62rem;
+      font-weight: 800;
+      min-width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 3px;
+    }
+
+    .heart-fill {
+      fill: var(--strawberry);
+      stroke: var(--strawberry);
+    }
+
+    .hamburger {
+      display: none;
+      width: 40px;
+      height: 40px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hamburger span,
+    .hamburger::before,
+    .hamburger::after {
+      content: "";
+    }
+
+    .ham-lines {
+      width: 22px;
+      height: 2px;
+      background: var(--brown);
+      position: relative;
+      transition: background 0.2s;
+    }
+
+    .ham-lines::before,
+    .ham-lines::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      width: 22px;
+      height: 2px;
+      background: var(--brown);
+      transition: transform 0.3s ease, top 0.3s ease, opacity 0.3s ease;
+    }
+
+    .ham-lines::before {
+      top: -7px;
+    }
+
+    .ham-lines::after {
+      top: 7px;
+    }
+
+    .hamburger.open .ham-lines {
+      background: transparent;
+    }
+
+    .hamburger.open .ham-lines::before {
+      top: 0;
+      transform: rotate(45deg);
+    }
+
+    .hamburger.open .ham-lines::after {
+      top: 0;
+      transform: rotate(-45deg);
+    }
+
+    .mobile-menu {
+      position: fixed;
+      inset: 0;
+      z-index: 190;
+      background: var(--cream);
+      padding: calc(env(safe-area-inset-top, 0px) + 100px) 32px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 26px;
+      transform: translateX(100%);
+      transition: transform 0.4s cubic-bezier(.65, 0, .35, 1);
+    }
+
+    .mobile-menu.open {
+      transform: translateX(0);
+    }
+
+    .mobile-menu a {
+      font-family: var(--serif);
+      font-size: 1.9rem;
+      color: var(--brown);
+      font-weight: 600;
+    }
+
+    .mobile-menu .btn {
+      margin-top: 12px;
+      align-self: flex-start;
+    }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      padding: calc(env(safe-area-inset-top, 0px) + 150px) 0 90px;
+      background: radial-gradient(circle at 85% 10%, var(--blush) 0%, transparent 45%), var(--cream);
+      overflow: hidden;
+    }
+
+    .hero .wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: var(--strawberry);
+      letter-spacing: 0.06em;
+      margin-bottom: 22px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.6rem, 4.6vw, 3.9rem);
+      line-height: 1.08;
+      margin-bottom: 22px;
+      max-width: 12ch;
+    }
+
+    .hero p.lede {
+      font-size: 1.08rem;
+      color: var(--brown);
+      max-width: 46ch;
+      margin-bottom: 34px;
+      opacity: 0.92;
+    }
+
+    .hero .cta-row {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .hero-art {
+      position: relative;
+    }
+
+    .hero-art .art-frame {
+      border-radius: 40% 60% 55% 45% / 50% 45% 55% 50%;
+      overflow: hidden;
+      background: linear-gradient(160deg, var(--blush), var(--cream-2) 70%);
+      box-shadow: var(--shadow);
+      aspect-ratio: 1/1;
+    }
+
+    .hero-art .art-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .floaty {
+      position: absolute;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(0deg);
+      }
+
+      50% {
+        transform: translateY(-14px) rotate(6deg);
+      }
+    }
+
+    .float-1 {
+      top: 4%;
+      left: -4%;
+      animation-delay: 0.2s;
+    }
+
+    .float-2 {
+      bottom: 10%;
+      right: -6%;
+      animation-delay: 1.1s;
+    }
+
+    .float-3 {
+      top: 42%;
+      right: -8%;
+      animation-delay: 2s;
+    }
+
+    .fresh-badge {
+      position: absolute;
+      bottom: -18px;
+      left: 8%;
+      background: var(--white);
+      border-radius: 999px;
+      padding: 14px 22px;
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--brown);
+    }
+
+    .hero-trust {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 22px;
+      margin-top: 26px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--brown);
+    }
+
+    .hero-trust span {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      opacity: 0.85;
+    }
+
+    .hero-trust .star {
+      color: var(--strawberry);
+      letter-spacing: 1px;
+    }
+
+    /* ---------- ANNOUNCEMENT ---------- */
+    .announce {
+      background: var(--brown);
+      color: var(--cream);
+      padding: 13px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .announce .track {
+      display: inline-flex;
+      gap: 48px;
+      animation: marquee 26s linear infinite;
+      font-size: 0.86rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    @keyframes marquee {
+      from {
+        transform: translateX(0);
+      }
+
+      to {
+        transform: translateX(-50%);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .announce .track {
+        animation: none;
+      }
+
+      .floaty {
+        animation: none;
+      }
+    }
+
+    /* ---------- SECTION HEADERS ---------- */
+    .sec-head {
+      max-width: 560px;
+      margin-bottom: 50px;
+    }
+
+    .sec-head.center {
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+
+    .sec-head h2 {
+      font-size: clamp(2rem, 3.4vw, 2.7rem);
+      margin-bottom: 12px;
+    }
+
+    .sec-head p {
+      color: var(--brown);
+      opacity: 0.85;
+      font-size: 1.03rem;
+    }
+
+    section.py {
+      padding: 100px 0;
+    }
+
+    /* ---------- PRODUCT GRID ---------- */
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 26px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow);
+    }
+
+    .card-media {
+      position: relative;
+      aspect-ratio: 4/3.3;
+      background: var(--cream-2);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .card:hover .card-media img {
+      transform: scale(1.08) rotate(-1deg);
+    }
+
+    .pill {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: var(--white);
+      color: var(--strawberry);
+      font-size: 0.66rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      padding: 6px 12px;
+      border-radius: 999px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .fav-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease;
+    }
+
+    .fav-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .fav-btn svg {
+      width: 16px;
+      height: 16px;
+      stroke: var(--brown);
+      fill: none;
+      transition: fill 0.2s, stroke 0.2s;
+    }
+
+    .fav-btn.active svg {
+      fill: var(--strawberry);
+      stroke: var(--strawberry);
+    }
+
+    .card-body {
+      padding: 20px 20px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1;
+    }
+
+    .card-body h3 {
+      font-size: 1.28rem;
+    }
+
+    .card-body .desc {
+      font-size: 0.86rem;
+      color: var(--brown);
+      opacity: 0.78;
+      min-height: 2.6em;
+    }
+
+    .card-foot {
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .price {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--choc);
+    }
+
+    .book-btn {
+      background: var(--blush);
+      color: var(--choc);
+      font-size: 0.78rem;
+      font-weight: 800;
+      padding: 10px 16px;
+      border-radius: 999px;
+      transition: background 0.25s ease, transform 0.2s ease;
+    }
+
+    .book-btn:hover {
+      background: var(--strawberry);
+      transform: translateY(-1px);
+    }
+
+    /* ---------- CATEGORIES ---------- */
+    .cat-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 26px;
+    }
+
+    .cat-card {
+      position: relative;
+      border-radius: var(--radius-lg);
+      aspect-ratio: 1/1.05;
+      overflow: hidden;
+      background: var(--cream-2);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .cat-card .cat-illus {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.5s ease;
+    }
+
+    .cat-card .cat-illus img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .cat-card:hover .cat-illus {
+      transform: scale(1.1);
+    }
+
+    .cat-overlay {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      padding: 22px 0 24px;
+      text-align: center;
+      background: linear-gradient(to top, rgba(62, 41, 34, 0.42), transparent);
+      transition: transform 0.35s ease;
+    }
+
+    .cat-card:hover .cat-overlay {
+      transform: translateY(-6px);
+    }
+
+    .cat-overlay span {
+      font-family: var(--serif);
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    /* ---------- STORY ---------- */
+    .story .wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 70px;
+      align-items: center;
+    }
+
+    .story-art {
+      border-radius: var(--radius-lg);
+      background: linear-gradient(155deg, var(--sage), var(--cream-2));
+      aspect-ratio: 4/4.6;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+
+    .story-art img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .story-label {
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: var(--strawberry);
+      letter-spacing: 0.05em;
+      margin-bottom: 16px;
+    }
+
+    .story h2 {
+      font-size: clamp(2rem, 3.2vw, 2.6rem);
+      max-width: 11ch;
+      margin-bottom: 20px;
+    }
+
+    .story p {
+      color: var(--brown);
+      opacity: 0.9;
+      margin-bottom: 26px;
+      max-width: 48ch;
+    }
+
+    .script-line {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1.3rem;
+      color: var(--strawberry);
+      margin-top: 28px;
+    }
+
+    /* ---------- CUSTOM CAKES ---------- */
+    .custom-sec {
+      background: var(--blush);
+      border-radius: 48px;
+      margin: 0 auto;
+      max-width: 1240px;
+      padding: 90px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .custom-sec .inner {
+      text-align: center;
+      max-width: 620px;
+      margin: 0 auto;
+    }
+
+    .custom-sec h2 {
+      font-size: clamp(2.1rem, 3.6vw, 2.9rem);
+      margin-bottom: 16px;
+    }
+
+    .custom-sec p {
+      color: var(--choc);
+      opacity: 0.85;
+      margin-bottom: 36px;
+      font-size: 1.04rem;
+    }
+
+    .cake-row {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+
+    .cake-thumb {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: var(--white);
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+
+    .cake-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .cake-thumb:hover {
+      transform: translateY(-6px) rotate(-2deg);
+    }
+
+    .how-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      max-width: 780px;
+      margin: 34px auto 0;
+    }
+
+    .how-step {
+      background: rgba(255, 255, 255, 0.66);
+      border-radius: var(--radius-md);
+      padding: 24px 20px;
+      text-align: left;
+    }
+
+    .how-step .n {
+      font-family: var(--serif);
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--brown);
+      opacity: 0.9;
+    }
+
+    .how-step h3 {
+      font-size: 1.06rem;
+      margin: 4px 0 6px;
+    }
+
+    .how-step p {
+      font-size: 0.85rem;
+      color: var(--choc);
+      opacity: 0.75;
+    }
+
+    @media (max-width: 860px) {
+      .how-row {
+        grid-template-columns: 1fr;
+        max-width: 360px;
+      }
+    }
+
+    /* ---------- INSTAGRAM ---------- */
+    .insta-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 14px;
+    }
+
+    .insta-item {
+      position: relative;
+      aspect-ratio: 1/1;
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--cream-2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .insta-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .insta-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(62, 41, 34, 0.55);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: var(--white);
+      font-weight: 700;
+      font-size: 0.85rem;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .insta-item:hover .insta-overlay {
+      opacity: 1;
+    }
+
+    .insta-item:hover svg.item-svg {
+      transform: scale(1.08);
+    }
+
+    svg.item-svg {
+      transition: transform 0.4s ease;
+    }
+
+    /* ---------- REVIEWS ---------- */
+    .review-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 26px;
+    }
+
+    .review-card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      padding: 32px 28px;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+    }
+
+    .stars {
+      color: var(--strawberry);
+      font-size: 0.95rem;
+      margin-bottom: 14px;
+      letter-spacing: 2px;
+    }
+
+    .review-card p.quote {
+      font-size: 1.02rem;
+      color: var(--choc);
+      margin-bottom: 18px;
+      font-style: italic;
+    }
+
+    .review-name {
+      font-weight: 700;
+      color: var(--brown);
+      font-size: 0.9rem;
+    }
+
+    .review-heart {
+      position: absolute;
+      top: 24px;
+      right: 26px;
+      width: 18px;
+      height: 18px;
+      opacity: 0.35;
+    }
+
+    /* ---------- NEWSLETTER ---------- */
+    .newsletter {
+      background: var(--cream-2);
+      border-radius: 48px;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 80px 40px;
+      text-align: center;
+    }
+
+    .newsletter h2 {
+      font-size: clamp(1.9rem, 3vw, 2.5rem);
+      margin-bottom: 12px;
+    }
+
+    .newsletter p {
+      color: var(--brown);
+      opacity: 0.85;
+      margin-bottom: 34px;
+    }
+
+    .nl-form {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      max-width: 460px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+    }
+
+    .nl-form input {
+      flex: 1;
+      min-width: 220px;
+      padding: 15px 22px;
+      border-radius: 999px;
+      border: 1.5px solid var(--blush);
+      background: var(--white);
+      color: var(--choc);
+      font-size: 1rem;
+    }
+
+    .nl-form input:focus {
+      border-color: var(--strawberry);
+      outline: none;
+    }
+
+    .nl-note {
+      margin-top: 14px;
+      font-size: 0.8rem;
+      color: var(--brown);
+      opacity: 0.7;
+    }
+
+    .nl-msg {
+      margin-top: 14px;
+      font-size: 0.85rem;
+      color: var(--strawberry);
+      font-weight: 700;
+      min-height: 1.2em;
+    }
+
+    /* ---------- FOOTER ---------- */
+    footer {
+      background: var(--choc);
+      color: var(--cream);
+      padding: 80px 0 30px;
+      margin-top: 100px;
+    }
+
+    footer .wrap {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr 1fr;
+      gap: 40px;
+      padding-bottom: 50px;
+      border-bottom: 1px solid rgba(255, 248, 240, 0.14);
+    }
+
+    footer .f-logo {
+      font-family: var(--serif);
+      font-size: 1.7rem;
+      color: var(--cream);
+      margin-bottom: 8px;
+    }
+
+    footer .f-tagline {
+      font-size: 0.9rem;
+      opacity: 0.75;
+      max-width: 26ch;
+    }
+
+    footer h4 {
+      font-size: 0.82rem;
+      letter-spacing: 0.06em;
+      opacity: 0.6;
+      margin-bottom: 18px;
+      font-family: var(--sans);
+      font-weight: 700;
+    }
+
+    footer ul li {
+      margin-bottom: 12px;
+      font-size: 0.92rem;
+      opacity: 0.88;
+    }
+
+    footer ul li a:hover {
+      opacity: 0.7;
+    }
+
+    .foot-social {
+      display: flex;
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .foot-social a {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 248, 240, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.25s ease, transform 0.2s ease;
+    }
+
+    .foot-social a:hover {
+      background: rgba(255, 248, 240, 0.12);
+      transform: translateY(-2px);
+    }
+
+    .foot-social svg {
+      width: 15px;
+      height: 15px;
+    }
+
+    footer .bottom {
+      padding-top: 26px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 0.82rem;
+      opacity: 0.6;
+    }
+
+    /* ---------- VISUALLY HIDDEN ---------- */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+
+    /* ---------- SCROLL REVEAL ---------- */
+    .reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ---------- SKELETON LOADER ---------- */
+    .skeleton {
+      background: linear-gradient(90deg, var(--cream-2) 25%, var(--blush) 50%, var(--cream-2) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s infinite;
+      border-radius: var(--radius-sm);
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: 200% 0;
+      }
+
+      100% {
+        background-position: -200% 0;
+      }
+    }
+
+    .card-skel .card-media {
+      aspect-ratio: 4/3.3;
+    }
+
+    .card-skel .skel-tag {
+      height: 22px;
+      width: 80px;
+      margin: 14px 0 0 14px;
+    }
+
+    .card-skel .skel-title {
+      height: 20px;
+      width: 70%;
+      margin: 20px 20px 8px;
+    }
+
+    .card-skel .skel-desc {
+      height: 14px;
+      width: 90%;
+      margin: 0 20px 8px;
+    }
+
+    .card-skel .skel-foot {
+      height: 14px;
+      width: 50%;
+      margin: 0 20px 20px;
+    }
+
+    /* ---------- MODAL BASE ---------- */
+    .modal-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+      background: rgba(62, 41, 34, 0.45);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      padding: 20px;
+    }
+
+    .modal-bg.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal {
+      background: var(--cream);
+      border-radius: var(--radius-lg);
+      box-shadow: 0 30px 80px -20px rgba(62, 41, 34, 0.5);
+      width: 100%;
+      max-width: 520px;
+      max-height: 90vh;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      padding: 40px 36px;
+      transform: translateY(20px) scale(0.97);
+      transition: transform 0.35s cubic-bezier(.34, 1.56, .64, 1);
+      position: relative;
+    }
+
+    .modal.wide {
+      max-width: 680px;
+    }
+
+    .modal-bg.show .modal {
+      transform: translateY(0) scale(1);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--brown);
+      transition: background 0.2s;
+    }
+
+    .modal-close:hover {
+      background: var(--blush);
+    }
+
+    .modal h2 {
+      font-size: 1.9rem;
+      margin-bottom: 6px;
+    }
+
+    .modal .modal-sub {
+      font-size: 0.9rem;
+      color: var(--brown);
+      opacity: 0.8;
+      margin-bottom: 26px;
+    }
+
+    /* ---------- FORM ELEMENTS ---------- */
+    .form-row {
+      display: grid;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .form-row.cols-2 {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .form-row.cols-3 {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .field label {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--brown);
+      letter-spacing: 0.03em;
+    }
+
+    .field input,
+    .field textarea,
+    .field select {
+      padding: 13px 16px;
+      border: 1.5px solid var(--blush);
+      border-radius: var(--radius-sm);
+      background: var(--white);
+      color: var(--choc);
+      font-family: var(--sans);
+      font-size: 1rem;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+
+    .field input:focus,
+    .field textarea:focus,
+    .field select:focus {
+      border-color: var(--strawberry);
+      outline: none;
+    }
+
+    .field textarea {
+      resize: vertical;
+      min-height: 90px;
+    }
+
+    .toppings-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .topping-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1.5px solid var(--blush);
+      background: var(--white);
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--brown);
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    }
+
+    .topping-chip input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .topping-chip:has(input:checked) {
+      background: var(--blush);
+      border-color: var(--strawberry);
+      color: var(--choc);
+    }
+
+    .topping-chip:hover {
+      border-color: var(--strawberry);
+    }
+
+    .topping-chip:focus-within {
+      border-color: var(--strawberry);
+      box-shadow: 0 0 0 3px rgba(239, 175, 168, 0.35);
+    }
+
+    .form-err {
+      font-size: 0.8rem;
+      color: #c0392b;
+      font-weight: 600;
+      min-height: 1em;
+    }
+
+    .form-success {
+      text-align: center;
+      padding: 28px 0 10px;
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      color: var(--brown);
+    }
+
+    .form-success .tick {
+      font-size: 2.6rem;
+      margin-bottom: 10px;
+    }
+
+    .form-success p {
+      font-family: var(--sans);
+      font-size: 0.92rem;
+      color: var(--brown);
+      opacity: 0.8;
+      margin-top: 8px;
+    }
+
+    /* ---------- AUTH TABS ---------- */
+    .auth-tabs {
+      display: flex;
+      border-bottom: 2px solid var(--blush);
+      margin-bottom: 26px;
+    }
+
+    .auth-tab {
+      flex: 1;
+      padding: 10px;
+      font-weight: 700;
+      font-size: 0.93rem;
+      color: var(--brown);
+      opacity: 0.5;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      transition: opacity 0.2s, border-color 0.2s;
+    }
+
+    .auth-tab.active {
+      opacity: 1;
+      border-color: var(--strawberry);
+      color: var(--strawberry);
+    }
+
+    /* ---------- TOAST ---------- */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--choc);
+      color: var(--cream);
+      padding: 14px 28px;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      box-shadow: 0 10px 30px -10px rgba(62, 41, 34, 0.6);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease, transform 0.35s ease;
+      z-index: 400;
+      white-space: nowrap;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .toast.success {
+      background: var(--brown);
+    }
+
+    /* ---------- NAV AUTH BUTTON ---------- */
+    .btn-auth {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--brown);
+      padding: 8px 16px;
+      border: 1.5px solid var(--blush);
+      border-radius: 999px;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn-auth:hover {
+      background: var(--brown);
+      color: var(--cream);
+      border-color: var(--brown);
+    }
+
+    .user-chip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--brown);
+    }
+
+    .user-chip .avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--blush);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--choc);
+    }
+
+    .user-chip .logout-btn {
+      font-size: 0.75rem;
+      opacity: 0.6;
+      font-weight: 600;
+    }
+
+    .user-chip .logout-btn:hover {
+      opacity: 1;
+      color: var(--strawberry);
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 1024px) {
+      .grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .cat-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .insta-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      footer .wrap {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .hero .wrap {
+        gap: 40px;
+      }
+    }
+
+    @media (max-width: 860px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .hero .wrap {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-art {
+        order: -1;
+        max-width: 380px;
+        margin: 0 auto 20px;
+      }
+
+      .hero h1 {
+        max-width: none;
+      }
+
+      .story .wrap {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .story-art {
+        order: -1;
+        max-width: 340px;
+        margin: 0 auto;
+      }
+
+      .review-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .custom-sec {
+        border-radius: 32px;
+        padding: 60px 26px;
+      }
+
+      .newsletter {
+        border-radius: 32px;
+        padding: 56px 26px;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .wrap {
+        padding: 0 20px;
+      }
+
+      section.py {
+        padding: 70px 0;
+      }
+
+      .grid-4 {
+        grid-template-columns: 1fr;
+      }
+
+      .cat-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+      }
+
+      .insta-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      footer .wrap {
+        grid-template-columns: 1fr;
+      }
+
+      .cake-row {
+        flex-wrap: wrap;
+      }
+
+      .cake-thumb {
+        width: 100px;
+        height: 100px;
+      }
+
+      .fresh-badge {
+        left: 4%;
+        font-size: 0.78rem;
+        padding: 11px 16px;
+      }
+
+      .form-row.cols-2 {
+        grid-template-columns: 1fr;
+      }
+
+      .form-row.cols-3 {
+        grid-template-columns: 1fr;
+      }
+
+      .modal {
+        padding: 30px 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ============ NAVBAR ============ -->
+  <header class="nav" id="siteNav">
+    <div class="wrap">
+      <a href="#top" class="logo" aria-label="Mellie Bakehouse home">
+        <span class="m">Mellie</span>
+        <span class="b">BAKEHOUSE</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#top">Home</a>
+        <a href="#menu">Our Menu</a>
+        <a href="#story">About</a>
+        <a href="#custom">Custom Cakes</a>
+        <a href="#footer">Contact</a>
+      </nav>
+      <div class="nav-right">
+        <button class="icon-btn" id="favNavBtn" aria-label="View favorites">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path
+              d="M12 21s-7.5-4.7-10-9.3C.4 8.2 2.3 4.5 6 4c2-.3 3.7.7 5 2.6 1.3-1.9 3-2.9 5-2.6 3.7.5 5.6 4.2 4 7.7C19.5 16.3 12 21 12 21z" />
+          </svg>
+          <span class="badge-count" id="favCount">0</span>
+        </button>
+        <div id="authArea">
+          <button class="btn-auth" id="authOpenBtn">Log In</button>
+        </div>
+        <a href="#custom" class="btn btn-primary btn-sm">Design Your Cake</a>
+        <button class="hamburger" id="hamBtn" aria-label="Open menu" aria-expanded="false">
+          <span class="ham-lines"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#top">Home</a>
+    <a href="#menu">Our Menu</a>
+    <a href="#story">About</a>
+    <a href="#custom">Custom Cakes</a>
+    <a href="#footer">Contact</a>
+    <a href="#custom" class="btn btn-primary">Design Your Cake</a>
+  </div>
+
+  <main id="top">
+    <!-- ============ HERO ============ -->
+    <section class="hero">
+      <div class="wrap">
+        <div>
+          <p class="eyebrow">Fresh from the oven <span aria-hidden="true">✦</span></p>
+          <h1>Sweet little moments, baked with love.</h1>
+          <p class="lede">From buttery croissants to dreamy celebration cakes, every treat is handmade in small batches
+            with the finest ingredients.</p>
+          <div class="cta-row">
+            <a href="#menu" class="btn btn-primary">Explore Our Menu</a>
+            <a href="#custom" class="btn btn-secondary">Design Your Cake →</a>
+          </div>
+          <div class="hero-trust">
+            <span><span class="star" aria-hidden="true">★★★★★</span> Rated 4.9 by our customers</span>
+            <span aria-hidden="true">♡</span>
+            <span>100+ cakes designed &amp; booked</span>
+          </div>
+        </div>
+        <div class="hero-art">
+          <div class="art-frame">
+            <img src="/images/hero_vintage_cake_v2.jpg"
+              alt="Vintage heart-shaped birthday cake with pastel ruffles, seashells and a satin bow">
+          </div>
+          <svg class="floaty float-1" width="34" height="34" viewBox="0 0 24 24" fill="#EFAFA8" aria-hidden="true">
+            <path
+              d="M12 21s-7.5-4.7-10-9.3C.4 8.2 2.3 4.5 6 4c2-.3 3.7.7 5 2.6 1.3-1.9 3-2.9 5-2.6 3.7.5 5.6 4.2 4 7.7C19.5 16.3 12 21 12 21z" />
+          </svg>
+          <svg class="floaty float-2" width="40" height="40" viewBox="0 0 24 24" fill="#6B4636" aria-hidden="true">
+            <path d="M12 2l1.8 5.6H19l-4.6 3.4 1.8 5.6L12 13.2 7.8 16.6l1.8-5.6L5 7.6h5.2z" />
+          </svg>
+          <svg class="floaty float-3" width="26" height="26" viewBox="0 0 24 24" fill="#DDE6D5" aria-hidden="true">
+            <path d="M12 2l1.8 5.6H19l-4.6 3.4 1.8 5.6L12 13.2 7.8 16.6l1.8-5.6L5 7.6h5.2z" />
+          </svg>
+          <div class="fresh-badge">Baked Fresh Daily <span aria-hidden="true">♡</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ANNOUNCEMENT ============ -->
+    <div class="announce" role="presentation" aria-label="Bakery announcements">
+      <div class="track">
+        <span>♡ Design & book your dream cake online</span>
+        <span>Freshly baked every morning</span>
+        <span>Custom cakes for every celebration</span>
+        <span>♡ Design & book your dream cake online</span>
+        <span>Freshly baked every morning</span>
+        <span>Custom cakes for every celebration</span>
+      </div>
+    </div>
+
+    <!-- ============ BESTSELLERS ============ -->
+    <section class="py" id="menu">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <h2>Our Little Favourites</h2>
+          <p>The treats everyone keeps coming back for.</p>
+        </div>
+        <div class="grid-4" id="productGrid"></div>
+      </div>
+    </section>
+
+    <!-- ============ CATEGORIES ============ -->
+    <section class="py" style="background:var(--cream-2)">
+      <div class="wrap">
+        <div class="sec-head center reveal" style="margin-left:auto;margin-right:auto;">
+          <h2>Something for Every Sweet Tooth</h2>
+          <p>Pick your craving — we'll do the rest.</p>
+        </div>
+        <div class="cat-grid" id="catGrid"></div>
+      </div>
+    </section>
+
+    <!-- ============ STORY ============ -->
+    <section class="py story" id="story">
+      <div class="wrap">
+        <div class="story-art reveal">
+          <img src="/images/design_floral_cake_v2.jpg"
+            alt="Tall chocolate layer cake with ganache drip and chocolate curls">
+        </div>
+        <div class="reveal">
+          <p class="story-label">Made by hand <span aria-hidden="true">♡</span></p>
+          <h2>A little bakery with a big heart.</h2>
+          <p>Mellie Bakehouse started with a simple idea — that the sweetest memories often begin with something freshly
+            baked. Every morning, our bakers prepare small batches using carefully selected ingredients, traditional
+            techniques, and a whole lot of love.</p>
+          <a href="#footer" class="btn btn-secondary">Our Story →</a>
+          <p class="script-line">"made slowly, enjoyed fully."</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CUSTOM CAKES ============ -->
+    <section class="py" id="custom">
+      <div class="wrap">
+        <div class="custom-sec reveal">
+          <svg class="floaty" style="position:absolute;top:8%;left:6%;" width="24" height="24" viewBox="0 0 24 24"
+            fill="#6B4636" aria-hidden="true">
+            <path d="M12 2l1.8 5.6H19l-4.6 3.4 1.8 5.6L12 13.2 7.8 16.6l1.8-5.6L5 7.6h5.2z" />
+          </svg>
+          <svg class="floaty" style="position:absolute;bottom:10%;right:8%;animation-delay:1.4s" width="30" height="30"
+            viewBox="0 0 24 24" fill="#EFAFA8" aria-hidden="true">
+            <path
+              d="M12 21s-7.5-4.7-10-9.3C.4 8.2 2.3 4.5 6 4c2-.3 3.7.7 5 2.6 1.3-1.9 3-2.9 5-2.6 3.7.5 5.6 4.2 4 7.7C19.5 16.3 12 21 12 21z" />
+          </svg>
+          <div class="inner">
+            <h2>Your Dream Cake, Made Just For You</h2>
+            <p>Birthday, anniversary, baby shower, graduation or simply because — tell us your idea and we'll turn it
+              into something delicious.</p>
+            <div class="cake-row" id="cakeThumbs"></div>
+            <div class="how-row">
+              <div class="how-step">
+                <div class="n">1</div>
+                <h3>Tell us your dream</h3>
+                <p>Pick flavor, design, size and toppings — or just describe your idea.</p>
+              </div>
+              <div class="how-step">
+                <div class="n">2</div>
+                <h3>We confirm the details</h3>
+                <p>Our bakers reply within 24 hours with a quote and sketch.</p>
+              </div>
+              <div class="how-step">
+                <div class="n">3</div>
+                <h3>We bake &amp; you celebrate</h3>
+                <p>Your cake is baked fresh and ready on your special day.</p>
+              </div>
+            </div>
+            <button class="btn btn-primary" id="cakeModalOpenBtn">Design Your Cake →</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ INSTAGRAM ============ -->
+    <section class="py">
+      <div class="wrap">
+        <div class="sec-head center reveal" style="margin-left:auto;margin-right:auto;">
+          <h2>A Little Sweetness on Your Feed</h2>
+          <p>@melliebakehouse</p>
+        </div>
+        <div class="insta-grid" id="instaGrid"></div>
+      </div>
+    </section>
+
+    <!-- ============ REVIEWS ============ -->
+    <section class="py" style="background:var(--cream-2)">
+      <div class="wrap">
+        <div class="sec-head center reveal" style="margin-left:auto;margin-right:auto;">
+          <h2>Sweet Words <span aria-hidden="true">♡</span></h2>
+        </div>
+        <div class="review-grid">
+          <div class="review-card reveal">
+            <svg class="review-heart" viewBox="0 0 24 24" fill="#EFAFA8">
+              <path
+                d="M12 21s-7.5-4.7-10-9.3C.4 8.2 2.3 4.5 6 4c2-.3 3.7.7 5 2.6 1.3-1.9 3-2.9 5-2.6 3.7.5 5.6 4.2 4 7.7C19.5 16.3 12 21 12 21z" />
+            </svg>
+            <div class="stars">★★★★★</div>
+            <p class="quote">"Everything was absolutely adorable — and even better than it looked!"</p>
+            <p class="review-name">Sofia M.</p>
+          </div>
+          <div class="review-card reveal">
+            <svg class="review-heart" viewBox="0 0 24 24" fill="#EFAFA8">
+              <path
+                d="M12 21s-7.5-4.7-10-9.3C.4 8.2 2.3 4.5 6 4c2-.3 3.7.7 5 2.6 1.3-1.9 3-2.9 5-2.6 3.7.5 5.6 4.2 4 7.7C19.5 16.3 12 21 12 21z" />
+            </svg>
+            <div class="stars">★★★★★</div>
+            <p class="quote">"The strawberry cake was honestly the highlight of my birthday."</p>
+            <p class="review-name">Ananya R.</p>
+          </div>
+          <div class="review-card reveal">
+            <svg class="review-heart" viewBox="0 0 24 24" fill="#EFAFA8">
+              <path
+                d="M12 21s-7.5-4.7-10-9.3C.4 8.2 2.3 4.5 6 4c2-.3 3.7.7 5 2.6 1.3-1.9 3-2.9 5-2.6 3.7.5 5.6 4.2 4 7.7C19.5 16.3 12 21 12 21z" />
+            </svg>
+            <div class="stars">★★★★★</div>
+            <p class="quote">"Beautiful packaging, delicious pastries and the cutest little bakery!"</p>
+            <p class="review-name">Riya K.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ NEWSLETTER ============ -->
+    <section class="py">
+      <div class="wrap">
+        <div class="newsletter reveal">
+          <h2>Let's Stay Sweet <span aria-hidden="true">♡</span></h2>
+          <p>Get first dibs on seasonal treats, new flavours and bakery news.</p>
+          <form class="nl-form" id="nlForm">
+            <label for="nlEmail" class="sr-only">Your email address</label>
+            <input type="email" id="nlEmail" placeholder="Your email address" required>
+            <button type="submit" class="btn btn-primary">Join the Sweet List</button>
+          </form>
+          <div class="nl-msg" id="nlMsg" aria-live="polite"></div>
+          <p class="nl-note">No spam. Just sweet things.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer id="footer">
+    <div class="wrap">
+      <div>
+        <p class="f-logo">Mellie Bakehouse</p>
+        <p class="f-tagline">Little moments, freshly baked.</p>
+        <div class="foot-social">
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="1.8">
+              <rect x="3" y="3" width="18" height="18" rx="5" />
+              <circle cx="12" cy="12" r="4" />
+              <circle cx="17.5" cy="6.5" r="1" />
+            </svg></a>
+          <a href="#" aria-label="Pinterest"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="1.8">
+              <circle cx="12" cy="12" r="9" />
+              <path d="M9 17c1-3 1.5-6 2-9M12 8c2 0 3.5 1.3 3.5 3.2 0 2.3-1.2 4-3 4-.7 0-1.3-.4-1.5-1" />
+            </svg></a>
+          <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="1.8">
+              <path d="M14 9h3V6h-3c-1.7 0-3 1.3-3 3v2H9v3h2v6h3v-6h2.5l.5-3H14V9.5c0-.3.2-.5.5-.5z" />
+            </svg></a>
+        </div>
+      </div>
+      <div>
+        <h4>NAVIGATE</h4>
+        <ul>
+          <li><a href="#top">Home</a></li>
+          <li><a href="#menu">Menu</a></li>
+          <li><a href="#story">About</a></li>
+          <li><a href="#custom">Custom Cakes</a></li>
+          <li><a href="#footer">Contact</a></li>
+          <li><a href="#footer">FAQs</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>VISIT</h4>
+        <ul>
+          <li>📍 Kolhapur, Maharashtra</li>
+          <li>📞 +91 XXXXX XXXXX</li>
+          <li>✉ hello@melliebakehouse.com</li>
+        </ul>
+      </div>
+      <div>
+        <h4>HOURS</h4>
+        <ul>
+          <li>Mon – Sat<br>9:00 AM – 8:00 PM</li>
+          <li>Sunday<br>10:00 AM – 6:00 PM</li>
+        </ul>
+      </div>
+    </div>
+    <div class="wrap bottom">
+      <span>© 2026 Mellie Bakehouse. Made with ♡ and butter.</span>
+    </div>
+  </footer>
+
+  <!-- ============ CUSTOM CAKE MODAL ============ -->
+  <div class="modal-bg" id="cakeModalBg" role="dialog" aria-modal="true" aria-label="Design your cake">
+    <div class="modal wide" id="cakeModal">
+      <button class="modal-close" id="cakeModalClose" aria-label="Close">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <path d="M6 6l12 12M18 6L6 18" />
+        </svg>
+      </button>
+      <h2>Design Your Cake</h2>
+      <p class="modal-sub">Tell us your dream — we'll bake it to life ♡</p>
+      <div id="cakeFormWrap">
+        <form id="cakeForm" novalidate>
+          <div class="form-row cols-2">
+            <div class="field">
+              <label for="ck-name">Your Name *</label>
+              <input type="text" id="ck-name" placeholder="Priya Sharma" required>
+            </div>
+            <div class="field">
+              <label for="ck-email">Email *</label>
+              <input type="email" id="ck-email" placeholder="priya@email.com" required>
+            </div>
+          </div>
+          <div class="form-row cols-2">
+            <div class="field">
+              <label for="ck-occasion">Occasion</label>
+              <select id="ck-occasion">
+                <option value="">Select…</option>
+                <option>Birthday</option>
+                <option>Anniversary</option>
+                <option>Baby Shower</option>
+                <option>Wedding</option>
+                <option>Graduation</option>
+                <option>Just Because</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="ck-design">Cake Design</label>
+              <select id="ck-design">
+                <option value="">Select…</option>
+                <option>Classic Cream</option>
+                <option>Tiered Cake</option>
+                <option>Photo Cake</option>
+                <option>Floral Elegance</option>
+                <option>Cartoon / Character Theme</option>
+                <option>Fondant Art</option>
+                <option>Minimal &amp; Modern</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row cols-2">
+            <div class="field">
+              <label for="ck-flavor">Flavor Preference</label>
+              <select id="ck-flavor">
+                <option value="">Select…</option>
+                <option>Vanilla</option>
+                <option>Chocolate</option>
+                <option>Strawberry</option>
+                <option>Red Velvet</option>
+                <option>Lemon</option>
+                <option>Butterscotch</option>
+                <option>Surprise Me!</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="ck-size">Cake Size</label>
+              <select id="ck-size">
+                <option value="">Select…</option>
+                <option>0.5 kg (4–6 people)</option>
+                <option>1 kg (8–10 people)</option>
+                <option>1.5 kg (12–15 people)</option>
+                <option>2 kg (18–20 people)</option>
+                <option>Custom size</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row cols-3">
+            <div class="field">
+              <label for="ck-budget">Budget</label>
+              <select id="ck-budget">
+                <option value="">Select…</option>
+                <option>Under ₹500</option>
+                <option>₹500 – ₹1,000</option>
+                <option>₹1,000 – ₹2,000</option>
+                <option>₹2,000 – ₹5,000</option>
+                <option>Above ₹5,000</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="ck-date">Needed By</label>
+              <input type="date" id="ck-date">
+            </div>
+            <div class="field">
+              <label for="ck-phone">Phone</label>
+              <input type="tel" id="ck-phone" placeholder="+91 9XXXXXXXXX">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label>Toppings &amp; Extras <span style="opacity:0.6;font-weight:600;">(pick any)</span></label>
+              <div class="toppings-grid" id="toppingsGrid">
+                <label class="topping-chip"><input type="checkbox" name="ck-topping" value="Fresh Strawberries"><span>🍓
+                    Fresh Strawberries</span></label>
+                <label class="topping-chip"><input type="checkbox" name="ck-topping" value="Chocolate Shavings"><span>🍫
+                    Chocolate Shavings</span></label>
+                <label class="topping-chip"><input type="checkbox" name="ck-topping" value="Rainbow Sprinkles"><span>🌈
+                    Rainbow Sprinkles</span></label>
+                <label class="topping-chip"><input type="checkbox" name="ck-topping" value="Crushed Nuts"><span>🥜
+                    Crushed Nuts</span></label>
+                <label class="topping-chip"><input type="checkbox" name="ck-topping" value="Cherries"><span>🍒
+                    Cherries</span></label>
+                <label class="topping-chip"><input type="checkbox" name="ck-topping" value="Edible Flowers"><span>🌸
+                    Edible Flowers</span></label>
+                <label class="topping-chip"><input type="checkbox" name="ck-topping" value="Fondant Figures"><span>🎨
+                    Fondant Figures</span></label>
+                <label class="topping-chip"><input type="checkbox" name="ck-topping" value="Golden Candles"><span>🕯️
+                    Golden Candles</span></label>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label for="ck-details">Describe Your Dream Cake *</label>
+              <textarea id="ck-details" placeholder="Layers, decorations, theme, any references…" required></textarea>
+            </div>
+          </div>
+          <p class="form-err" id="cakeFormErr"></p>
+          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:6px;"
+            id="cakeSubmitBtn">Send My Request →</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ AUTH MODAL ============ -->
+  <div class="modal-bg" id="authModalBg" role="dialog" aria-modal="true" aria-label="Log in or create account">
+    <div class="modal" id="authModal">
+      <button class="modal-close" id="authModalClose" aria-label="Close">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <path d="M6 6l12 12M18 6L6 18" />
+        </svg>
+      </button>
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tabLogin" type="button">Log In</button>
+        <button class="auth-tab" id="tabRegister" type="button">Create Account</button>
+      </div>
+      <!-- LOGIN PANEL -->
+      <div id="loginPanel">
+        <form id="loginForm" novalidate>
+          <div class="form-row">
+            <div class="field">
+              <label for="lg-email">Email</label>
+              <input type="email" id="lg-email" placeholder="hello@example.com" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label for="lg-pass">Password</label>
+              <input type="password" id="lg-pass" placeholder="••••••••" required>
+            </div>
+          </div>
+          <p class="form-err" id="loginErr"></p>
+          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:6px;"
+            id="loginSubmitBtn">Log In</button>
+        </form>
+      </div>
+      <!-- REGISTER PANEL -->
+      <div id="registerPanel" style="display:none">
+        <form id="registerForm" novalidate>
+          <div class="form-row">
+            <div class="field">
+              <label for="rg-name">Your Name</label>
+              <input type="text" id="rg-name" placeholder="Priya Sharma" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label for="rg-email">Email</label>
+              <input type="email" id="rg-email" placeholder="hello@example.com" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label for="rg-pass">Password</label>
+              <input type="password" id="rg-pass" placeholder="At least 6 characters" required>
+            </div>
+          </div>
+          <p class="form-err" id="registerErr"></p>
+          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:6px;"
+            id="registerSubmitBtn">Create Account</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ TOAST ============ -->
+  <div class="toast" id="toast" role="alert" aria-live="polite"></div>
+
+  <script>
+    (function () {
+      // ====== CONFIG ======
+      // When the site is served by the backend itself, API calls and images use same-origin
+      // paths. When opened via file:// or a static preview (ports 5500–5599), point
+      // explicitly at the backend on port 4000. Edge sometimes resolves "localhost" to
+      // ::1 (IPv6) while Node listens on IPv4 — so we probe candidates and fall back to
+      // 127.0.0.1, which always reaches an IPv4 listener.
+      const API_CANDIDATES = (location.protocol.startsWith('http') && !/^55\d\d$/.test(location.port)) ? [''] : ['http://localhost:4000', 'http://127.0.0.1:4000'];
+      let API = API_CANDIDATES[0];
+      async function resolveApiBase() {
+        if (API_CANDIDATES.length === 1) return API;
+        for (const base of API_CANDIDATES) {
+          try { const r = await fetch(base + '/api/health', { cache: 'no-store' }); if (r.ok) { API = base; return API; } } catch (_) {}
+        }
+        return API;
+      }
+      resolveApiBase();
+      // Backend-served pages use root-relative /images; under Live Server or file:// use a
+      // path relative to this file (mellie-backend/public/images) so photos always load,
+      // even if the backend isn't running yet.
+      const IMG_BASE = API ? 'public/images/' : '/images/';
+      // Re-point static <img> tags that use root-relative paths when not same-origin
+      if (API) {
+        document.querySelectorAll('img[src^="/images/"]').forEach(im => { im.src = IMG_BASE + im.getAttribute('src').slice('/images/'.length); });
+      }
+
+      // ====== HELPERS ======
+      function showToast(msg, type = '') {
+        const t = document.getElementById('toast');
+        t.textContent = msg;
+        t.className = 'toast show' + (type ? ' ' + type : '');
+        clearTimeout(t._timer);
+        t._timer = setTimeout(() => t.classList.remove('show'), 3000);
+      }
+
+      // ====== AUTH STATE ======
+      let authToken = localStorage.getItem('mb_token') || null;
+      let authUser = JSON.parse(localStorage.getItem('mb_user') || 'null');
+
+      function saveAuth(token, user) {
+        authToken = token; authUser = user;
+        localStorage.setItem('mb_token', token);
+        localStorage.setItem('mb_user', JSON.stringify(user));
+        renderAuthArea();
+      }
+      function clearAuth() {
+        authToken = null; authUser = null;
+        localStorage.removeItem('mb_token');
+        localStorage.removeItem('mb_user');
+        renderAuthArea();
+      }
+      function renderAuthArea() {
+        const area = document.getElementById('authArea');
+        if (authUser) {
+          const initials = authUser.name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+          area.innerHTML = `
+        <div class="user-chip">
+          <div class="avatar">${initials}</div>
+          <span>${authUser.name.split(' ')[0]}</span>
+          <button class="logout-btn" id="logoutBtn">Log out</button>
+        </div>`;
+          document.getElementById('logoutBtn').addEventListener('click', () => { clearAuth(); showToast('Logged out.'); });
+        } else {
+          area.innerHTML = '<button class="btn-auth" id="authOpenBtn">Log In</button>';
+          document.getElementById('authOpenBtn').addEventListener('click', () => openModal('auth'));
+        }
+      }
+
+      // ====== MODAL HELPERS ======
+      let lastFocused = null;
+      function openModal(which) {
+        lastFocused = document.activeElement;
+        const bg = document.getElementById(which === 'cake' ? 'cakeModalBg' : 'authModalBg');
+        bg.classList.add('show');
+        document.body.style.overflow = 'hidden';
+        const first = bg.querySelector('input, select, textarea, button:not(.modal-close)');
+        if (first) setTimeout(() => first.focus(), 120);
+      }
+      function closeModal(which) {
+        const bg = document.getElementById(which === 'cake' ? 'cakeModalBg' : 'authModalBg');
+        bg.classList.remove('show');
+        document.body.style.overflow = '';
+        if (lastFocused && lastFocused.focus) lastFocused.focus();
+      }
+
+      // Escape closes any open modal
+      document.addEventListener('keydown', (e) => {
+        if (e.key !== 'Escape') return;
+        if (document.getElementById('cakeModalBg').classList.contains('show')) closeModal('cake');
+        else if (document.getElementById('authModalBg').classList.contains('show')) closeModal('auth');
+      });
+
+      // Escape closes any open modal (see above) — reopening the designer restores the form
+      const cakeModalOpenHandler = () => {
+        const success = document.getElementById('cakeSuccess');
+        if (success) success.style.display = 'none';
+        document.getElementById('cakeForm').style.display = '';
+        openModal('cake');
+      };
+      document.getElementById('cakeModalOpenBtn').addEventListener('click', cakeModalOpenHandler);
+      document.getElementById('cakeModalClose').addEventListener('click', () => closeModal('cake'));
+      document.getElementById('cakeModalBg').addEventListener('click', (e) => { if (e.target === e.currentTarget) closeModal('cake'); });
+
+      // Pre-fill the designer when the user arrives from a product card
+      function prefillCakeModal(p) {
+        const detailsEl = document.getElementById('ck-details');
+        if (detailsEl && !detailsEl.value.trim()) {
+          detailsEl.value = `I'd love something like the "${p.name}" (₹${p.price}) — `;
+        }
+      }
+
+      // Auth modal open/close
+      document.getElementById('authOpenBtn').addEventListener('click', () => openModal('auth'));
+      document.getElementById('authModalClose').addEventListener('click', () => closeModal('auth'));
+      document.getElementById('authModalBg').addEventListener('click', (e) => { if (e.target === e.currentTarget) closeModal('auth'); });
+
+      // Auth tabs
+      document.getElementById('tabLogin').addEventListener('click', () => {
+        document.getElementById('tabLogin').classList.add('active');
+        document.getElementById('tabRegister').classList.remove('active');
+        document.getElementById('loginPanel').style.display = '';
+        document.getElementById('registerPanel').style.display = 'none';
+      });
+      document.getElementById('tabRegister').addEventListener('click', () => {
+        document.getElementById('tabRegister').classList.add('active');
+        document.getElementById('tabLogin').classList.remove('active');
+        document.getElementById('registerPanel').style.display = '';
+        document.getElementById('loginPanel').style.display = 'none';
+      });
+
+      // ====== LOGIN ======
+      document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const errEl = document.getElementById('loginErr');
+        const btn = document.getElementById('loginSubmitBtn');
+        errEl.textContent = '';
+        const email = document.getElementById('lg-email').value.trim();
+        const password = document.getElementById('lg-pass').value;
+        if (!email || !password) { errEl.textContent = 'Please fill in all fields.'; return; }
+        btn.textContent = 'Logging in…'; btn.disabled = true;
+        try {
+          const res = await fetch(API + '/api/auth/login', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+          });
+          const data = await res.json();
+          if (!res.ok) { errEl.textContent = data.error || 'Login failed.'; return; }
+          saveAuth(data.token, data.user);
+          closeModal('auth');
+          showToast('Welcome back, ' + data.user.name.split(' ')[0] + '! ♡', 'success');
+        } catch { errEl.textContent = 'Could not connect to server.'; }
+        finally { btn.textContent = 'Log In'; btn.disabled = false; }
+      });
+
+      // ====== REGISTER ======
+      document.getElementById('registerForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const errEl = document.getElementById('registerErr');
+        const btn = document.getElementById('registerSubmitBtn');
+        errEl.textContent = '';
+        const name = document.getElementById('rg-name').value.trim();
+        const email = document.getElementById('rg-email').value.trim();
+        const password = document.getElementById('rg-pass').value;
+        if (!name || !email || !password) { errEl.textContent = 'Please fill in all fields.'; return; }
+        if (password.length < 6) { errEl.textContent = 'Password must be at least 6 characters.'; return; }
+        btn.textContent = 'Creating account…'; btn.disabled = true;
+        try {
+          const res = await fetch(API + '/api/auth/register', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, email, password })
+          });
+          const data = await res.json();
+          if (!res.ok) { errEl.textContent = data.error || 'Registration failed.'; return; }
+          saveAuth(data.token, data.user);
+          closeModal('auth');
+          showToast('Account created! Welcome, ' + data.user.name.split(' ')[0] + ' ♡', 'success');
+        } catch { errEl.textContent = 'Could not connect to server.'; }
+        finally { btn.textContent = 'Create Account'; btn.disabled = false; }
+      });
+
+      // ====== CUSTOM CAKE FORM ======
+      document.getElementById('cakeForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const errEl = document.getElementById('cakeFormErr');
+        const btn = document.getElementById('cakeSubmitBtn');
+        errEl.textContent = '';
+        const name = document.getElementById('ck-name').value.trim();
+        const email = document.getElementById('ck-email').value.trim();
+        const details = document.getElementById('ck-details').value.trim();
+        if (!name || !email || !details) { errEl.textContent = 'Name, email and cake details are required.'; return; }
+        const toppings = Array.from(document.querySelectorAll('input[name="ck-topping"]:checked')).map(cb => cb.value);
+        const body = {
+          name, email,
+          phone: document.getElementById('ck-phone').value.trim(),
+          occasion: document.getElementById('ck-occasion').value,
+          design: document.getElementById('ck-design').value,
+          flavor: document.getElementById('ck-flavor').value,
+          toppings: toppings.join(', '),
+          size: document.getElementById('ck-size').value,
+          budget: document.getElementById('ck-budget').value,
+          needed_by: document.getElementById('ck-date').value,
+          details
+        };
+        btn.textContent = 'Sending…'; btn.disabled = true;
+        try {
+          const headers = { 'Content-Type': 'application/json' };
+          if (authToken) headers['Authorization'] = 'Bearer ' + authToken;
+          const res = await fetch(API + '/api/custom-cakes', {
+            method: 'POST', headers, body: JSON.stringify(body)
+          });
+          const data = await res.json();
+          if (!res.ok) { errEl.textContent = data.error || 'Something went wrong.'; btn.textContent = 'Send My Request →'; btn.disabled = false; return; }
+          // Show success state, but keep the form DOM intact so the designer can be reused
+          const form = document.getElementById('cakeForm');
+          form.reset();
+          document.querySelectorAll('#toppingsGrid input[type="checkbox"]').forEach(cb => { cb.checked = false; });
+          form.style.display = 'none';
+          const wrap = document.getElementById('cakeFormWrap');
+          if (!document.getElementById('cakeSuccess')) {
+            wrap.insertAdjacentHTML('beforeend', `
+          <div class="form-success" id="cakeSuccess">
+            <div class="tick">🎂</div>
+            <h2 style="font-size:1.6rem">Booking Received!</h2>
+            <p>We'll reach out to <strong>${email.replace(/</g, '&lt;')}</strong> within 24 hours to confirm your cake design &amp; booking.</p>
+            <button type="button" class="btn btn-secondary" style="margin-top:24px" id="cakeSuccessClose">Close</button>
+          </div>`);
+            document.getElementById('cakeSuccessClose').addEventListener('click', () => closeModal('cake'));
+          } else {
+            document.querySelector('#cakeSuccess p strong').textContent = email;
+          }
+          document.getElementById('cakeSuccess').style.display = '';
+          showToast('Custom cake booking sent! ♡', 'success');
+        } catch { errEl.textContent = 'Could not connect to server.'; btn.textContent = 'Send My Request →'; btn.disabled = false; }
+      });
+
+      // ---------- Real product photos (served from /images by the backend) ----------
+      // Image URLs are stamped with a version number that changes whenever any
+      // image file changes (admin upload). The stamp is fetched fresh from the
+      // backend on every page load — never from localStorage — so an updated
+      // photo always appears, even after the browser cached the old one.
+      let imgVersion = 0;
+      const stamp = (u) => u + (u.includes('?') ? '&' : '?') + 'v=' + imgVersion;
+      const photo = {
+        cake: () => stamp(IMG_BASE + 'strawberry_cloud_cake_v2.jpg'),
+        croissant: () => stamp(IMG_BASE + 'butter_croissant_v2.jpg'),
+        cupcake: () => stamp(IMG_BASE + 'berry_bliss_cupcake_v2.jpg'),
+        tart: () => stamp(IMG_BASE + 'chocolate_dream_tart_v2.jpg'),
+        cookie: () => stamp(IMG_BASE + 'chocolate_chip_cookies_v2.jpg'),
+        pastry: () => stamp(IMG_BASE + 'danish_pastry_v2.jpg')
+      };
+      function imgTag(key, alt, photoUrl) {
+        let src;
+        if (photoUrl && /^https?:\/\//.test(photoUrl)) {
+          src = photoUrl; // cloud-stored photo (Vercel Blob) — absolute URL
+        } else if (photoUrl) {
+          src = (API ? 'http://localhost:4000' : '') + photoUrl + (photoUrl.includes('?') ? '&' : '?') + 'v=' + imgVersion;
+        } else {
+          src = (photo[key] || photo.cake)();
+        }
+        return `<img src="${src}" alt="${alt || 'Delicious bakery treat'}" loading="lazy">`;
+      }
+
+      // ---------- Data (loaded from API) ----------
+      let products = [];
+
+      // ---------- Skeleton loaders ----------
+      function renderSkeletons(n) {
+        const grid = document.getElementById('productGrid');
+        grid.innerHTML = Array.from({ length: n }, () => `
+      <div class="card card-skel">
+        <div class="card-media skeleton"></div>
+        <div class="card-body">
+          <div class="skeleton skel-title"></div>
+          <div class="skeleton skel-desc"></div>
+          <div class="skeleton skel-foot"></div>
+        </div>
+      </div>`).join('');
+      }
+
+      // ---------- Fetch products from API ----------
+      async function fetchProductsOnce() {
+        const res = await fetch(API + '/api/products');
+        if (!res.ok) throw new Error('Non-OK');
+        const data = await res.json();
+        // API returns { products: [...] } — accept both shapes for safety
+        const list = Array.isArray(data) ? data : (data.products || []);
+        // Map API shape → local shape (photo key selects the real image from /images)
+        return list.map(p => ({
+          id: String(p.id),
+          name: p.name,
+          price: p.price,
+          desc: p.description,
+          tag: p.tag || '',
+          stock: p.stock,
+          photoKey: p.image_key || 'cake',
+          photoUrl: p.image_url || ''
+        }));
+      }
+
+      async function loadProducts() {
+        renderSkeletons(4);
+        try {
+          // One quiet retry covers the moment a page loads just before the server is ready.
+          try { products = await fetchProductsOnce(); }
+          catch (_) { await new Promise(r => setTimeout(r, 700)); products = await fetchProductsOnce(); }
+        } catch {
+          // Safety net so the page never looks broken if the backend is briefly offline.
+          products = [
+            { id: 'p1', name: 'Strawberry Cloud Cake', price: 799, desc: 'Light vanilla sponge, whipped cream & fresh strawberries.', tag: 'BESTSELLER', photoKey: 'cake', stock: 12 },
+            { id: 'p2', name: 'Classic Butter Croissant', price: 149, desc: 'Flaky, buttery layers baked fresh every morning.', tag: 'NEW', photoKey: 'croissant', stock: 40 },
+            { id: 'p3', name: 'Berry Bliss Cupcake', price: 179, desc: 'Moist cupcake topped with berry buttercream.', tag: 'SEASONAL', photoKey: 'cupcake', stock: 25 },
+            { id: 'p4', name: 'Chocolate Dream Tart', price: 499, desc: 'Silky dark chocolate ganache in a crisp shell.', tag: 'BESTSELLER', photoKey: 'tart', stock: 8 },
+          ];
+        }
+        renderProducts();
+        // restore favourite hearts after re-render
+        document.querySelectorAll('[data-fav]').forEach(btn => {
+          if (favorites.has(btn.getAttribute('data-fav'))) {
+            btn.classList.add('active');
+            btn.setAttribute('aria-pressed', 'true');
+          }
+        });
+      }
+
+      const categories = [
+        { name: 'Cakes', photoKey: 'cake' },
+        { name: 'Pastries', photoKey: 'pastry' },
+        { name: 'Cupcakes', photoKey: 'cupcake' },
+        { name: 'Cookies', photoKey: 'cookie' },
+      ];
+
+      const instaTiles = ['cake', 'cupcake', 'croissant', 'pastry', 'tart', 'cookie'];
+
+      // ---------- Render products ----------
+      function renderProducts() {
+        const grid = document.getElementById('productGrid');
+        grid.innerHTML = products.map(p => `
+      <div class="card">
+        <div class="card-media">
+          ${p.tag ? `<span class="pill">${p.tag}</span>` : ''}
+          <button class="fav-btn" data-fav="${p.id}" aria-label="Add ${p.name} to favorites" aria-pressed="false">
+            <svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.7-10-9.3C.4 8.2 2.3 4.5 6 4c2-.3 3.7.7 5 2.6 1.3-1.9 3-2.9 5-2.6 3.7.5 5.6 4.2 4 7.7C19.5 16.3 12 21 12 21z"/></svg>
+          </button>
+          ${imgTag(p.photoKey, p.name, p.photoUrl)}
+        </div>
+        <div class="card-body">
+          <h3>${p.name}</h3>
+          <p class="desc">${p.desc}</p>
+          <div class="card-foot">
+            <span class="price">₹${p.price}</span>
+            <button class="book-btn" data-book="${p.id}" ${p.stock === 0 ? 'disabled style="opacity:0.5;cursor:default"' : ''}>${p.stock === 0 ? 'Sold Out' : 'Book This Cake'}</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+      }
+
+      // ---------- Render categories ----------
+      function renderCategories() {
+        document.getElementById('catGrid').innerHTML = categories.map(c => `
+    <div class="cat-card">
+      <div class="cat-illus">${imgTag(c.photoKey, c.name)}</div>
+      <div class="cat-overlay"><span>${c.name}</span></div>
+    </div>
+  `).join('');
+      }
+      renderCategories();
+
+      // ---------- Render cake thumbs ----------
+      function renderCakeThumbs() {
+        document.getElementById('cakeThumbs').innerHTML = [
+          { key: 'cake', alt: 'Custom celebration cake' },
+          { key: 'tart', alt: 'Custom chocolate tart' },
+          { key: 'cupcake', alt: 'Custom berry cupcake' }
+        ].map(t => `<div class="cake-thumb">${imgTag(t.key, t.alt)}</div>`).join('');
+      }
+      renderCakeThumbs();
+
+      // ---------- Render instagram grid ----------
+      function renderInsta() {
+        document.getElementById('instaGrid').innerHTML = instaTiles.map(key => `
+    <div class="insta-item">
+      ${imgTag(key, 'Mellie Bakehouse treat')}
+      <div class="insta-overlay">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M12 21s-7.5-4.7-10-9.3C.4 8.2 2.3 4.5 6 4c2-.3 3.7.7 5 2.6 1.3-1.9 3-2.9 5-2.6 3.7.5 5.6 4.2 4 7.7C19.5 16.3 12 21 12 21z"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/></svg>
+      </div>
+    </div>
+  `).join('');
+      }
+      renderInsta();
+
+      // ---------- State ----------
+      let favorites = new Set(JSON.parse(localStorage.getItem('mb_favs') || '[]'));
+
+      const favCountEl = document.getElementById('favCount');
+      function updateFavCount() { favCountEl.textContent = favorites.size; }
+
+      // ---------- Event delegation ----------
+      document.addEventListener('click', function (e) {
+        const favBtn = e.target.closest('[data-fav]');
+        if (favBtn) {
+          const id = favBtn.getAttribute('data-fav');
+          if (favorites.has(id)) { favorites.delete(id); favBtn.classList.remove('active'); favBtn.setAttribute('aria-pressed', 'false'); }
+          else { favorites.add(id); favBtn.classList.add('active'); favBtn.setAttribute('aria-pressed', 'true'); showToast('Saved to your favourites ♡'); }
+          localStorage.setItem('mb_favs', JSON.stringify([...favorites]));
+          updateFavCount();
+          return;
+        }
+        // "Book This Cake" opens the cake designer pre-filled with that product
+        const bookBtn = e.target.closest('[data-book]');
+        if (bookBtn) {
+          const p = products.find(x => x.id === bookBtn.getAttribute('data-book'));
+          if (p) prefillCakeModal(p);
+          cakeModalOpenHandler();
+        }
+      });
+
+      // ---------- Favorites nav ----------
+      document.getElementById('favNavBtn').addEventListener('click', function () {
+        document.getElementById('menu').scrollIntoView({ behavior: 'smooth' });
+      });
+
+      // ---------- Mobile menu ----------
+      const hamBtn = document.getElementById('hamBtn');
+      const mobileMenu = document.getElementById('mobileMenu');
+      hamBtn.addEventListener('click', function () {
+        const open = mobileMenu.classList.toggle('open');
+        hamBtn.classList.toggle('open', open);
+        hamBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+      mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+        hamBtn.classList.remove('open');
+        hamBtn.setAttribute('aria-expanded', 'false');
+      }));
+
+      // ---------- Sticky nav on scroll ----------
+      const navEl = document.getElementById('siteNav');
+      function onScroll() {
+        if (window.scrollY > 40) navEl.classList.add('scrolled');
+        else navEl.classList.remove('scrolled');
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+
+      // ---------- Scroll reveal ----------
+      const revealEls = document.querySelectorAll('.reveal');
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) { entry.target.classList.add('in'); io.unobserve(entry.target); }
+          });
+        }, { threshold: 0.15 });
+        revealEls.forEach(el => io.observe(el));
+      } else {
+        revealEls.forEach(el => el.classList.add('in'));
+      }
+
+      // ---------- Newsletter ----------
+      document.getElementById('nlForm').addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const input = document.getElementById('nlEmail');
+        const msg = document.getElementById('nlMsg');
+        const email = input.value.trim();
+        if (!email || !email.includes('@')) {
+          msg.textContent = 'Please enter a valid email address.';
+          return;
+        }
+        try {
+          const res = await fetch(API + '/api/newsletter', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email }),
+          });
+          const data = await res.json().catch(() => ({}));
+          msg.textContent = res.ok
+            ? (data.message || "You're on the list! Welcome to the sweetness ♡")
+            : (data.error || 'Could not join the list. Please try again.');
+          if (res.ok) this.reset();
+        } catch (_) {
+          // Backend unreachable — don't lose the sign-up: keep it locally and
+          // it will be sent automatically as soon as the backend is reachable.
+          try {
+            const pending = JSON.parse(localStorage.getItem('nl_pending') || '[]');
+            if (!pending.includes(email)) pending.push(email);
+            localStorage.setItem('nl_pending', JSON.stringify(pending));
+          } catch (_) {}
+          msg.textContent = "You're on the list! Welcome to the sweetness ♡";
+          this.reset();
+        }
+      });
+      // Flush sign-ups captured while the backend was down
+      (async function flushNewsletter() {
+        try {
+          const pending = JSON.parse(localStorage.getItem('nl_pending') || '[]');
+          if (!pending.length) return;
+          for (const email of pending) {
+            await fetch(API + '/api/newsletter', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ email }),
+            }).catch(() => { throw new Error('stop'); });
+          }
+          localStorage.removeItem('nl_pending');
+        } catch (_) { /* retry on next visit */ }
+      })();
+
+      // ====== BOOTSTRAP ======
+      renderAuthArea();
+      resolveApiBase().then(loadProducts);
+      updateFavCount();
+
+      // ====== LIVE IMAGE SYNC ======
+      // Fetches the backend's image version: on page load (so replaced photos
+      // show immediately) and every ~10s (so open pages update live when you
+      // upload from the admin console). If the backend is unreachable, a one-time
+      // unique stamp is used so the browser can never show a stale cached photo.
+      function applyImgVersion() {
+        document.querySelectorAll('img').forEach(im => {
+          const raw = im.getAttribute('src') || '';
+          if (!raw.includes('/images/') || raw.startsWith('data:')) return;
+          const clean = raw.split('?')[0];
+          im.setAttribute('src', clean + '?v=' + imgVersion);
+        });
+      }
+      function rerenderImages() {
+        if (products.length) renderProducts();
+        renderCategories();
+        renderCakeThumbs();
+        renderInsta();
+        applyImgVersion();
+      }
+      async function watchImageVersion() {
+        await resolveApiBase(); // re-probe (Edge/IPv6 safe)
+        let version = 0;
+        try {
+          const r = await fetch(API + '/api/images-version', { cache: 'no-store' });
+          if (r.ok) { const j = await r.json(); version = j.version || 0; }
+        } catch (_) { /* backend offline */ }
+        if (!version) {
+          if (!imgVersion) { imgVersion = Date.now(); rerenderImages(); }
+          return;
+        }
+        if (version !== imgVersion) { imgVersion = version; rerenderImages(); }
+      }
+      watchImageVersion();
+      setInterval(watchImageVersion, 10000);
+
+    })();
+  </script>
+</body>
+
+</html>

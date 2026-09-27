@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mellie Console — Admin</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧁</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FFF8F0; --cream2: #FCF2E7; --blush: #F7D9D0; --straw: #EFAFA8;
+    --brown: #6B4636; --choc: #3E2922; --white: #fff; --line: #EED9CE;
+    --ok: #2e7d32; --warn: #b26a00; --bad: #c0392b;
+    --shadow: 0 14px 34px -18px rgba(62,41,34,.35);
+    --r: 16px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Nunito Sans',sans-serif; background:var(--cream); color:var(--choc); line-height:1.5; }
+  h1,h2,h3 { font-family:'Cormorant Garamond',serif; color:var(--brown); }
+  button { font-family:inherit; cursor:pointer; border:none; background:none; color:inherit; }
+  a { color:inherit; text-decoration:none; }
+
+  /* ---------- LOGIN GATE ---------- */
+  #gate { min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px;
+    background: radial-gradient(circle at 20% 10%, var(--blush) 0%, transparent 45%), var(--cream); }
+  .gate-card { background:var(--white); border-radius:24px; box-shadow:var(--shadow); padding:40px 36px; width:100%; max-width:400px; }
+  .gate-card h1 { font-size:1.9rem; margin-bottom:4px; }
+  .gate-card p.sub { color:var(--brown); opacity:.75; font-size:.9rem; margin-bottom:24px; }
+  .field { display:flex; flex-direction:column; gap:6px; margin-bottom:14px; }
+  .field label { font-size:.8rem; font-weight:700; color:var(--brown); }
+  .field input, .field select, .field textarea {
+    padding:12px 14px; border:1.5px solid var(--line); border-radius:12px;
+    background:var(--white); color:var(--choc); font-size:1rem; font-family:inherit; width:100%;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus { border-color:var(--straw); outline:none; }
+  .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    padding:12px 22px; border-radius:999px; font-weight:700; font-size:.92rem;
+    background:var(--brown); color:var(--cream); transition:transform .2s, background .2s; }
+  .btn:hover { background:var(--choc); transform:translateY(-1px); }
+  .btn.secondary { background:var(--cream2); color:var(--brown); border:1.5px solid var(--line); }
+  .btn.secondary:hover { background:var(--blush); }
+  .btn.danger { background:#fdecea; color:var(--bad); }
+  .btn.danger:hover { background:#f9d9d5; }
+  .btn.sm { padding:8px 14px; font-size:.8rem; }
+  .btn.full { width:100%; }
+  .err { color:var(--bad); font-size:.85rem; font-weight:600; min-height:1.2em; margin-bottom:8px; }
+
+  /* ---------- SHELL ---------- */
+  #app { display:none; }
+  header.bar { position:sticky; top:0; z-index:50; background:rgba(255,248,240,.92); backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line); padding:14px 0; }
+  .bar-in { max-width:1200px; margin:0 auto; padding:0 24px; display:flex; align-items:center; gap:18px; flex-wrap:wrap; }
+  .brand { font-family:'Cormorant Garamond',serif; font-size:1.45rem; color:var(--brown); font-weight:600; }
+  .brand small { display:block; font-family:'Nunito Sans',sans-serif; font-size:.58rem; letter-spacing:.28em; color:var(--straw); font-weight:800; }
+  nav.tabs { display:flex; gap:6px; flex-wrap:wrap; margin-left:auto; }
+  nav.tabs button { padding:9px 16px; border-radius:999px; font-weight:700; font-size:.86rem; color:var(--brown); }
+  nav.tabs button.active { background:var(--brown); color:var(--cream); }
+  nav.tabs button:not(.active):hover { background:var(--blush); }
+  .who { font-size:.8rem; font-weight:700; color:var(--brown); opacity:.8; }
+
+  main { max-width:1200px; margin:0 auto; padding:30px 24px 70px; }
+  section.pane { display:none; }
+  section.pane.active { display:block; }
+  .pane-head { display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin-bottom:20px; }
+  .pane-head h2 { font-size:1.75rem; }
+  .pane-head .spacer { margin-left:auto; }
+
+  /* ---------- CARDS / GRIDS ---------- */
+  .stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:16px; margin-bottom:28px; }
+  .stat { background:var(--white); border-radius:var(--r); box-shadow:var(--shadow); padding:20px 22px; }
+  .stat .n { font-family:'Cormorant Garamond',serif; font-size:2.2rem; color:var(--brown); font-weight:600; }
+  .stat .l { font-size:.8rem; font-weight:700; color:var(--brown); opacity:.7; letter-spacing:.04em; }
+
+  .card { background:var(--white); border-radius:var(--r); box-shadow:var(--shadow); padding:24px; }
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  @media (max-width:860px){ .grid2 { grid-template-columns:1fr; } nav.tabs { margin-left:0; } }
+
+  table { width:100%; border-collapse:collapse; font-size:.9rem; }
+  th { text-align:left; font-size:.72rem; letter-spacing:.06em; color:var(--brown); opacity:.65; padding:10px 10px; border-bottom:2px solid var(--line); }
+  td { padding:12px 10px; border-bottom:1px solid var(--cream2); vertical-align:top; }
+  tr:hover td { background:var(--cream2); }
+  .tbl-wrap { overflow-x:auto; }
+
+  .pill { display:inline-block; padding:3px 10px; border-radius:999px; font-size:.68rem; font-weight:800; letter-spacing:.04em; }
+  .pill.pending { background:#fff4e0; color:var(--warn); }
+  .pill.confirmed { background:#e5f3e6; color:var(--ok); }
+  .pill.completed { background:#e8eefc; color:#3556b8; }
+  .pill.cancelled { background:#fdecea; color:var(--bad); }
+  .pill.admin { background:var(--blush); color:var(--choc); }
+  .pill.customer { background:var(--cream2); color:var(--brown); }
+
+  .thumb { width:74px; height:56px; object-fit:cover; border-radius:10px; box-shadow:0 4px 10px -4px rgba(62,41,34,.4); }
+
+  .req-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:18px; }
+  .req-card { background:var(--white); border-radius:var(--r); box-shadow:var(--shadow); padding:20px; }
+  .req-card h3 { font-size:1.25rem; margin-bottom:2px; }
+  .req-card .meta { font-size:.8rem; color:var(--brown); opacity:.75; margin-bottom:10px; }
+  .req-rows { display:grid; grid-template-columns:1fr 1fr; gap:6px 14px; font-size:.84rem; margin:10px 0; }
+  .req-rows b { color:var(--brown); }
+  .req-details { background:var(--cream2); border-radius:12px; padding:10px 12px; font-size:.86rem; margin:10px 0; }
+  .req-actions { display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; }
+
+  .slot-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:16px; }
+  .slot-card { background:var(--white); border-radius:var(--r); box-shadow:var(--shadow); overflow:hidden; }
+  .slot-card img { width:100%; height:130px; object-fit:cover; display:block; }
+  .slot-card .in { padding:12px 14px 16px; }
+  .slot-card .slot-name { font-weight:800; font-size:.82rem; letter-spacing:.05em; color:var(--brown); }
+  .slot-card .fname { font-size:.72rem; opacity:.6; margin:2px 0 10px; word-break:break-all; }
+  .upload-row { display:flex; gap:8px; align-items:center; }
+
+  .photo-block { display:flex; gap:16px; align-items:flex-start; background:var(--cream2); border-radius:12px; padding:14px; margin-bottom:14px; flex-wrap:wrap; }
+  .photo-preview { width:120px; height:96px; object-fit:cover; border-radius:10px; box-shadow:0 6px 14px -8px rgba(62,41,34,.5); display:block; }
+  .photo-controls { display:flex; flex-direction:column; gap:8px; align-items:flex-start; }
+  .photo-controls .ok-msg { min-height:0; }
+
+  input[type=file] { font-size:.8rem; max-width:100%; }
+  .muted { opacity:.65; font-size:.85rem; }
+  .ok-msg { color:var(--ok); font-size:.82rem; font-weight:700; min-height:1em; }
+  .toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(20px);
+    background:var(--choc); color:var(--cream); padding:12px 24px; border-radius:999px;
+    font-size:.86rem; font-weight:700; opacity:0; pointer-events:none; transition:all .3s; z-index:99; }
+  .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- ============ LOGIN GATE ============ -->
+<div id="gate">
+  <div class="gate-card">
+    <h1>Mellie Console 🧁</h1>
+    <p class="sub">Admin access — products, uploads, bookings &amp; accounts.</p>
+    <form id="loginForm">
+      <div class="field">
+        <label for="ad-email">Admin email</label>
+        <input type="email" id="ad-email" placeholder="admin@melliebakehouse.com" required>
+      </div>
+      <div class="field">
+        <label for="ad-pass">Password</label>
+        <input type="password" id="ad-pass" placeholder="••••••••" required>
+      </div>
+      <p class="err" id="loginErr"></p>
+      <button type="submit" class="btn full" id="loginBtn">Sign In</button>
+    </form>
+  </div>
+</div>
+
+<!-- ============ APP SHELL ============ -->
+<div id="app">
+  <header class="bar">
+    <div class="bar-in">
+      <div class="brand">Mellie Console<small>ADMIN</small></div>
+      <nav class="tabs" id="tabs">
+        <button data-pane="dash" class="active">Dashboard</button>
+        <button data-pane="prods">Products &amp; Images</button>
+        <button data-pane="reqs">Cake Requests</button>
+        <button data-pane="users">Accounts</button>
+        <button data-pane="subs">Sweet List</button>
+      </nav>
+      <span class="who" id="whoAmI"></span>
+      <button class="btn secondary sm" id="logoutBtn">Log out</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- DASHBOARD -->
+    <section class="pane active" id="pane-dash">
+      <div class="pane-head"><h2>Dashboard</h2></div>
+      <div class="stats" id="statCards"></div>
+      <div class="card">
+        <h3 style="margin-bottom:8px">Quick actions</h3>
+        <p class="muted" style="margin-bottom:14px">Jump straight to the daily tasks.</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn sm" data-goto="prods">Add a product</button>
+          <button class="btn sm secondary" data-goto="reqs">Review pending requests</button>
+          <button class="btn sm secondary" data-goto="users">View accounts</button>
+          <a class="btn sm secondary" href="/" target="_blank" rel="noopener">Open storefront ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUCTS & IMAGES -->
+    <section class="pane" id="pane-prods">
+      <div class="pane-head">
+        <h2>Products &amp; Images</h2>
+        <div class="spacer"></div>
+        <button class="btn sm" id="newProdBtn">+ New Product</button>
+      </div>
+
+      <div class="card" id="prodFormCard" style="display:none;margin-bottom:22px">
+        <h3 id="prodFormTitle" style="margin-bottom:14px">New product</h3>
+        <form id="prodForm">
+          <div class="grid2">
+            <div class="field"><label for="p-name">Name *</label><input id="p-name" required></div>
+            <div class="field"><label for="p-price">Price (₹) *</label><input id="p-price" type="number" min="0" required></div>
+            <div class="field"><label for="p-category">Category</label>
+              <select id="p-category"><option>Cakes</option><option>Pastries</option><option>Cupcakes</option><option>Cookies</option></select>
+            </div>
+            <div class="field"><label for="p-tag">Tag</label>
+              <select id="p-tag"><option value="">—</option><option>BESTSELLER</option><option>NEW</option><option>SEASONAL</option></select>
+            </div>
+            <div class="field"><label for="p-stock">Stock</label><input id="p-stock" type="number" min="0" value="10"></div>
+            <div class="field"><label for="p-image_key">Catalog image slot</label>
+              <select id="p-image_key">
+                <option value="cake">cake — Strawberry Cloud Cake</option>
+                <option value="croissant">croissant — Butter Croissant</option>
+                <option value="cupcake">cupcake — Berry Bliss Cupcake</option>
+                <option value="tart">tart — Chocolate Dream Tart</option>
+                <option value="cookie">cookie — Choc Chip Cookies</option>
+                <option value="pastry">pastry — Cake Slices</option>
+              </select>
+            </div>
+          </div>
+          <div class="field"><label for="p-description">Description</label><textarea id="p-description" rows="2"></textarea></div>
+
+          <div class="photo-block">
+            <div class="photo-prev-wrap">
+              <img id="p-photoPreview" class="photo-preview" alt="Product photo preview" hidden>
+              <span id="p-photoFallback" class="muted" style="font-size:.8rem">Uses the catalog slot image</span>
+            </div>
+            <div class="photo-controls">
+              <label class="btn sm secondary" style="cursor:pointer">
+                Choose photo… <input type="file" id="p-photoFile" accept="image/*" hidden>
+              </label>
+              <button type="button" class="btn sm secondary" id="p-photoUpload" disabled>Upload photo</button>
+              <button type="button" class="btn sm danger" id="p-photoRemove" hidden>Remove custom photo</button>
+              <p class="ok-msg" id="p-photoMsg"></p>
+            </div>
+            <p class="muted" style="font-size:.72rem;margin-top:6px">A custom photo here overrides the catalog slot image for this product only. JPG/PNG/WEBP up to 8 MB.</p>
+          </div>
+
+          <p class="err" id="prodErr"></p>
+          <div style="display:flex;gap:10px">
+            <button type="submit" class="btn">Save Product</button>
+            <button type="button" class="btn secondary" id="prodCancelBtn">Cancel</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-bottom:6px">Catalog images</h3>
+        <p class="muted" style="margin-bottom:14px">Upload a photo into a slot — the storefront updates instantly. JPG/PNG/WEBP up to 8 MB.</p>
+        <div class="slot-grid" id="slotGrid"></div>
+        <hr style="border:none;border-top:1px solid var(--cream2);margin:20px 0">
+        <h3 style="margin-bottom:6px">Uploaded images</h3>
+        <p class="muted" style="margin-bottom:12px">Extra images (not tied to a slot). These can be deleted.</p>
+        <div class="slot-grid" id="extraGrid"></div>
+      </div>
+
+      <div class="card" style="margin-top:22px">
+        <h3 style="margin-bottom:14px">All products</h3>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Image</th><th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th>Tag</th><th>Status</th><th></th></tr></thead>
+            <tbody id="prodRows"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- CAKE REQUESTS -->
+    <section class="pane" id="pane-reqs">
+      <div class="pane-head">
+        <h2>Cake Design Requests</h2>
+        <div class="spacer"></div>
+        <select id="reqFilter" style="padding:9px 14px;border:1.5px solid var(--line);border-radius:999px;font-family:inherit;font-weight:700;color:var(--brown);background:#fff">
+          <option value="">All statuses</option>
+          <option value="pending">Pending</option>
+          <option value="confirmed">Confirmed</option>
+          <option value="completed">Completed</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+      </div>
+      <div class="req-grid" id="reqGrid"></div>
+    </section>
+
+    <!-- USERS -->
+    <section class="pane" id="pane-users">
+      <div class="pane-head"><h2>Accounts &amp; Login Credentials</h2></div>
+      <div class="card">
+        <p class="muted" style="margin-bottom:14px">Registered customer and admin accounts. Passwords are stored only as secure hashes — they can never be read back.</p>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>#</th><th>Name</th><th>Email</th><th>Role</th><th>Registered</th><th></th></tr></thead>
+            <tbody id="userRows"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+    <section class="pane" id="pane-subs">
+      <div class="pane-head">
+        <h2>Sweet List — Newsletter Subscribers</h2>
+        <span class="spacer"></span>
+        <button class="btn sm secondary" id="subsExport">Export CSV</button>
+        <button class="btn sm secondary" id="subsRefresh">Refresh</button>
+      </div>
+      <div class="card">
+        <p class="muted" style="margin-bottom:14px">Customers who joined from the storefront's "Let's Stay Sweet" form. Newest first.</p>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>#</th><th>Email</th><th>Joined</th><th></th></tr></thead>
+            <tbody id="subsRows"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="app.js"></script>
+</body>
+</html>

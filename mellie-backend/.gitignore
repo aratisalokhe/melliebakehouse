@@ -1,0 +1,6 @@
+node_modules/
+bakery.db
+bakery.db-journal
+bakery.db-wal
+bakery.db-shm
+.env
