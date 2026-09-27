@@ -3,14 +3,14 @@
   'use strict';
 
   // Where the backend API lives:
-  //   • served BY the backend, or hosted (Vercel) → same-origin ('')
+  //   • served BY the backend, or hosted (Vercel etc.) → same-origin ('')
   //   • static preview / Live Server (ports 5500–5599) or file:// → localhost:4000
-  // Edge sometimes resolves "localhost" to ::1 (IPv6) while Node listens on IPv4
-  // only — if the first candidate fails we retry 127.0.0.1, which always reaches
-  // an IPv4 listener. The winning base is used for the rest of the session.
-  const API_CANDIDATES = (location.protocol.startsWith('http') && !/^55\d\d$/.test(location.port))
+  // Anything that is NOT localhost counts as hosted (e.g. *.vercel.app), so the
+  // console always talks to its own origin there — no cross-origin guessing.
+  const IS_LOCAL = /^(localhost|127\.0\.0\.1|::1|\[::1\])$/i.test(location.hostname);
+  const API_CANDIDATES = (location.protocol.startsWith('http') && IS_LOCAL && !/^55\d\d$/.test(location.port))
     ? ['']
-    : ['http://localhost:4000', 'http://127.0.0.1:4000'];
+    : (IS_LOCAL ? ['http://localhost:4000', 'http://127.0.0.1:4000'] : ['']);
   let API = API_CANDIDATES[0];
 
   async function resolveApiBase() {
@@ -110,7 +110,10 @@
     } catch (err) {
       // "Failed to fetch" almost always means the backend isn't running — say so plainly.
       if (/failed to fetch|networkerror|load failed/i.test(err.message)) {
-        $('loginErr').textContent = 'Cannot reach the backend. Start it with "npm start" in the mellie-backend folder, then try again.';
+        const onHost = !/^(localhost|127\.0\.0\.1|::1)$/i.test(location.hostname) && location.protocol.startsWith('http');
+        $('loginErr').textContent = onHost
+          ? 'Cannot reach the server API on this deployment. If you just deployed, finish the setup: connect the Turso database (DATABASE_URL + DATABASE_AUTH_TOKEN) and redeploy. Check /api/health for status.'
+          : 'Cannot reach the backend. Start it with "npm start" in the mellie-backend folder, then try again.';
       } else {
         $('loginErr').textContent = err.message;
       }

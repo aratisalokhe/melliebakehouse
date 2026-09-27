@@ -360,6 +360,16 @@
       transform: translateX(0);
     }
 
+    /* The generic menu-link color must not paint the CTA button brown-on-brown */
+    .mobile-menu a.btn {
+      color: var(--cream);
+      font-family: inherit;
+      font-size: 1rem;
+      align-self: stretch;
+      justify-content: center;
+      display: flex;
+    }
+
     .mobile-menu a {
       font-family: var(--serif);
       font-size: 1.9rem;
@@ -1174,15 +1184,177 @@
     }
 
     /* ---------- SCROLL REVEAL ---------- */
-    .reveal {
+    /* Scroll-reveal is PROGRESSIVE ENHANCEMENT: the hidden state is applied
+       by JS (.js-armed) only when the IntersectionObserver is actually working.
+       If JS fails, or the observer never fires (some embedded browsers), the
+       content is always visible — nothing can ever be "missing" on any device.
+       Above-the-fold elements are never armed, so the hero is instant. */
+    .reveal.js-armed {
       opacity: 0;
       transform: translateY(26px);
+    }
+
+    .reveal {
       transition: opacity 0.7s ease, transform 0.7s ease;
     }
 
     .reveal.in {
       opacity: 1;
       transform: translateY(0);
+    }
+
+    @media (max-width: 860px) {
+      /* Small screens: skip slide-in entirely — just a fast, subtle fade.
+         Mobile users want content NOW, and tall grids can outrun observers. */
+      .reveal.js-armed {
+        opacity: 0;
+        transform: none;
+      }
+      .reveal {
+        transition: opacity 0.45s ease;
+      }
+    }
+
+    /* ---------- POLISHED ANIMATION LAYER ---------- */
+    /* Staggered entrances: cards cascade in once their grid has revealed.
+       Only applies when the grid was armed AND revealed — otherwise cards are
+       simply visible. Card classes in this site: .card (products), .cat-card, .cake-thumb,
+       .insta-item — plus reveal-on-scroll handled by .reveal/.in */
+    .reveal.in .card,
+    .reveal.in .cat-card,
+    .reveal.in .cake-thumb,
+    .reveal.in .insta-item {
+      animation: cardIn 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+    /* Un-armed grids (JS/observer unavailable): cards always fully visible */
+    .reveal:not(.js-armed) .card,
+    .reveal:not(.js-armed) .cat-card,
+    .reveal:not(.js-armed) .cake-thumb,
+    .reveal:not(.js-armed) .insta-item {
+      animation: none;
+    }
+    .reveal.in .card:nth-child(1), .reveal.in .cat-card:nth-child(1), .reveal.in .cake-thumb:nth-child(1), .reveal.in .insta-item:nth-child(1) { animation-delay: 0.05s; }
+    .reveal.in .card:nth-child(2), .reveal.in .cat-card:nth-child(2), .reveal.in .cake-thumb:nth-child(2), .reveal.in .insta-item:nth-child(2) { animation-delay: 0.14s; }
+    .reveal.in .card:nth-child(3), .reveal.in .cat-card:nth-child(3), .reveal.in .cake-thumb:nth-child(3), .reveal.in .insta-item:nth-child(3) { animation-delay: 0.23s; }
+    .reveal.in .card:nth-child(4), .reveal.in .cat-card:nth-child(4), .reveal.in .cake-thumb:nth-child(4), .reveal.in .insta-item:nth-child(4) { animation-delay: 0.32s; }
+    .reveal.in .card:nth-child(5), .reveal.in .cat-card:nth-child(5), .reveal.in .cake-thumb:nth-child(5), .reveal.in .insta-item:nth-child(5) { animation-delay: 0.41s; }
+    .reveal.in .card:nth-child(6), .reveal.in .cat-card:nth-child(6), .reveal.in .cake-thumb:nth-child(6), .reveal.in .insta-item:nth-child(6) { animation-delay: 0.5s; }
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(22px) scale(0.97); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* Product cards: lift + image zoom + soft shadow on hover */
+    .card {
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
+    }
+    .card:hover {
+      transform: translateY(-7px);
+      box-shadow: 0 22px 44px -18px rgba(62, 41, 34, 0.32);
+    }
+    .card-media img {
+      transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .card:hover .card-media img {
+      transform: scale(1.055);
+    }
+    .cat-card img,
+    .insta-item img {
+      transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .cat-card:hover img,
+    .insta-item:hover img {
+      transform: scale(1.07);
+    }
+
+    /* Buttons: gentle lift with a warm glow */
+    .btn {
+      transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+    .btn:active {
+      transform: translateY(0) scale(0.985);
+    }
+    .btn-primary:hover {
+      box-shadow: 0 10px 26px -10px rgba(107, 70, 54, 0.55);
+    }
+
+    /* Hero cake: slow, dreamy float (adds to the existing .floaty sparkles) */
+    @keyframes dreamyFloat {
+      0%, 100% { transform: translateY(0) rotate(-1.2deg); }
+      50% { transform: translateY(-14px) rotate(1.2deg); }
+    }
+    .hero-art .art-frame {
+      animation: dreamyFloat 6s ease-in-out infinite;
+    }
+
+    /* Section headings: soft fade-slide when revealed (arming-aware,
+       same progressive-enhancement rule as .reveal — never hides content) */
+    .sec-head.js-armed {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    .sec-head {
+      transition: opacity 0.6s ease 0.08s, transform 0.6s ease 0.08s;
+    }
+    .in .sec-head,
+    .sec-head.reveal.in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Nav links: subtle underline sweep */
+    #siteNav nav a {
+      position: relative;
+    }
+    #siteNav nav a::after {
+      content: '';
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      bottom: 4px;
+      height: 2px;
+      border-radius: 2px;
+      background: var(--brown);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    #siteNav nav a:hover::after {
+      transform: scaleX(1);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal.in .card,
+      .reveal.in .cat-card,
+      .reveal.in .cake-thumb,
+      .reveal.in .insta-item {
+        animation: none;
+      }
+      .hero-art .art-frame {
+        animation: none;
+      }
+      .card,
+      .card-media img,
+      .cat-card img,
+      .insta-item img,
+      .btn,
+      .sec-head {
+        transition: none;
+      }
+      .card:hover {
+        transform: none;
+      }
+      .sec-head {
+        opacity: 1;
+        transform: none;
+      }
+      .sec-head.js-armed {
+        opacity: 0;
+        transform: none;
+      }
     }
 
     /* ---------- SKELETON LOADER ---------- */
@@ -1431,6 +1603,32 @@
     }
 
     /* ---------- AUTH TABS ---------- */
+    .auth-gate-note {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: linear-gradient(135deg, #FFF3E6, #FDE8E0);
+      border: 1px solid var(--blush);
+      border-radius: 14px;
+      padding: 12px 14px;
+      margin-bottom: 18px;
+      font-size: 0.88rem;
+      line-height: 1.45;
+      animation: gateIn 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .auth-gate-note .gate-icon {
+      font-size: 1.5rem;
+      animation: gentleBob 2.4s ease-in-out infinite;
+    }
+    @keyframes gateIn {
+      from { opacity: 0; transform: translateY(-8px) scale(0.97); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @keyframes gentleBob {
+      0%, 100% { transform: translateY(0) rotate(-4deg); }
+      50% { transform: translateY(-4px) rotate(4deg); }
+    }
+
     .auth-tabs {
       display: flex;
       border-bottom: 2px solid var(--blush);
@@ -1609,11 +1807,41 @@
 
     @media (max-width: 620px) {
       .wrap {
-        padding: 0 20px;
+        padding: 0 16px;
       }
 
       section.py {
         padding: 70px 0;
+      }
+
+      /* --- Mobile navbar: compact so nothing clips on small screens --- */
+      header.nav {
+        padding-top: calc(env(safe-area-inset-top, 0px) + 10px);
+        padding-bottom: 10px;
+      }
+      .logo .m {
+        font-size: 1.35rem;
+      }
+      .nav-right {
+        gap: 8px;
+      }
+      .nav-right .btn.btn-primary.btn-sm {
+        padding: 8px 12px;
+        font-size: 0.78rem;
+      }
+      .btn-auth {
+        padding: 7px 12px;
+        font-size: 0.78rem;
+      }
+      .icon-btn {
+        width: 36px;
+        height: 36px;
+      }
+      .user-chip span {
+        max-width: 72px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
 
       .grid-4 {
@@ -1765,10 +1993,9 @@
           <h2>Our Little Favourites</h2>
           <p>The treats everyone keeps coming back for.</p>
         </div>
-        <div class="grid-4" id="productGrid"></div>
+        <div class="grid-4 reveal" id="productGrid"></div>
       </div>
     </section>
-
     <!-- ============ CATEGORIES ============ -->
     <section class="py" style="background:var(--cream-2)">
       <div class="wrap">
@@ -1776,7 +2003,7 @@
           <h2>Something for Every Sweet Tooth</h2>
           <p>Pick your craving — we'll do the rest.</p>
         </div>
-        <div class="cat-grid" id="catGrid"></div>
+        <div class="cat-grid reveal" id="catGrid"></div>
       </div>
     </section>
 
@@ -1816,7 +2043,7 @@
             <h2>Your Dream Cake, Made Just For You</h2>
             <p>Birthday, anniversary, baby shower, graduation or simply because — tell us your idea and we'll turn it
               into something delicious.</p>
-            <div class="cake-row" id="cakeThumbs"></div>
+        <div class="cake-row" id="cakeThumbs"></div>
             <div class="how-row">
               <div class="how-step">
                 <div class="n">1</div>
@@ -1847,7 +2074,7 @@
           <h2>A Little Sweetness on Your Feed</h2>
           <p>@melliebakehouse</p>
         </div>
-        <div class="insta-grid" id="instaGrid"></div>
+        <div class="insta-grid reveal" id="instaGrid"></div>
       </div>
     </section>
 
@@ -2105,6 +2332,10 @@
           <path d="M6 6l12 12M18 6L6 18" />
         </svg>
       </button>
+      <div class="auth-gate-note" id="authGateNote" style="display:none">
+        <span class="gate-icon" aria-hidden="true">🎂</span>
+        <div><b>One quick step before you design.</b><br>Log in or create a free account — your cake design continues right after.</div>
+      </div>
       <div class="auth-tabs">
         <button class="auth-tab active" id="tabLogin" type="button">Log In</button>
         <button class="auth-tab" id="tabRegister" type="button">Create Account</button>
@@ -2164,13 +2395,17 @@
   <script>
     (function () {
       // ====== CONFIG ======
-      // When the site is served by the backend itself, API calls and images use same-origin
-      // paths. When opened via file:// or a static preview (ports 5500–5599), point
-      // explicitly at the backend on port 4000. Edge sometimes resolves "localhost" to
-      // ::1 (IPv6) while Node listens on IPv4 — so we probe candidates and fall back to
-      // 127.0.0.1, which always reaches an IPv4 listener.
-      const API_CANDIDATES = (location.protocol.startsWith('http') && !/^55\d\d$/.test(location.port)) ? [''] : ['http://localhost:4000', 'http://127.0.0.1:4000'];
+      // When the site is served by the backend itself — or hosted (any non-localhost
+      // origin, e.g. *.vercel.app) — API calls use same-origin paths. Only when opened
+      // via file:// or a static preview (ports 5500–5599) do we point at
+      // localhost:4000 explicitly (with a 127.0.0.1 fallback for Edge's IPv6 quirk).
+      const IS_LOCAL = /^(localhost|127\.0\.0\.1|::1|\[::1\])$/i.test(location.hostname);
+      const API_CANDIDATES = (location.protocol.startsWith('http') && IS_LOCAL && !/^55\d\d$/.test(location.port)) ? [''] : (IS_LOCAL ? ['http://localhost:4000', 'http://127.0.0.1:4000'] : ['']);
       let API = API_CANDIDATES[0];
+      // Friendly, hosting-aware connection message (used by every form)
+      const CONN_ERR = IS_LOCAL
+        ? 'Could not reach the bakery server. Start it locally with "npm start" in the mellie-backend folder.'
+        : 'Could not reach the bakery server. It may be starting up — please try again in a few seconds.';
       async function resolveApiBase() {
         if (API_CANDIDATES.length === 1) return API;
         for (const base of API_CANDIDATES) {
@@ -2255,12 +2490,46 @@
       });
 
       // Escape closes any open modal (see above) — reopening the designer restores the form
-      const cakeModalOpenHandler = () => {
+      // LOGIN GATE: designing a cake requires an account. The designer opens only
+      // when signed in; otherwise the Log In / Sign Up modal appears first, and
+      // the designer reopens automatically right after login/registration.
+      let pendingCakeDesign = false; // set when a gate redirects to login
+      function userIsSignedIn() { return !!(authUser && authToken); }
+      function openCakeDesigner() {
         const success = document.getElementById('cakeSuccess');
         if (success) success.style.display = 'none';
         document.getElementById('cakeForm').style.display = '';
         openModal('cake');
-      };
+      }
+      function requestCakeDesigner(prefillProduct) {
+        if (userIsSignedIn()) {
+          if (prefillProduct) prefillCakeModal(prefillProduct);
+          openCakeDesigner();
+          return;
+        }
+        // Not signed in → show the auth modal with a friendly explanation,
+        // and remember to open the designer as soon as they authenticate.
+        pendingCakeDesign = prefillProduct || true;
+        const note = document.getElementById('authGateNote');
+        if (note) note.style.display = '';
+        // Land on the registration tab for brand-new customers, but keep login one tap away
+        document.getElementById('tabLogin').classList.remove('active');
+        document.getElementById('tabRegister').classList.add('active');
+        document.getElementById('registerPanel').style.display = '';
+        document.getElementById('loginPanel').style.display = 'none';
+        openModal('auth');
+      }
+      function consumePendingCakeDesign() {
+        if (!pendingCakeDesign) return;
+        const p = (pendingCakeDesign && pendingCakeDesign !== true) ? pendingCakeDesign : null;
+        pendingCakeDesign = false;
+        const note = document.getElementById('authGateNote');
+        if (note) note.style.display = 'none';
+        closeModal('auth');
+        if (p) prefillCakeModal(p);
+        openCakeDesigner();
+      }
+      const cakeModalOpenHandler = () => requestCakeDesigner(null);
       document.getElementById('cakeModalOpenBtn').addEventListener('click', cakeModalOpenHandler);
       document.getElementById('cakeModalClose').addEventListener('click', () => closeModal('cake'));
       document.getElementById('cakeModalBg').addEventListener('click', (e) => { if (e.target === e.currentTarget) closeModal('cake'); });
@@ -2312,7 +2581,8 @@
           saveAuth(data.token, data.user);
           closeModal('auth');
           showToast('Welcome back, ' + data.user.name.split(' ')[0] + '! ♡', 'success');
-        } catch { errEl.textContent = 'Could not connect to server.'; }
+          consumePendingCakeDesign();
+        } catch { errEl.textContent = CONN_ERR; }
         finally { btn.textContent = 'Log In'; btn.disabled = false; }
       });
 
@@ -2338,7 +2608,8 @@
           saveAuth(data.token, data.user);
           closeModal('auth');
           showToast('Account created! Welcome, ' + data.user.name.split(' ')[0] + ' ♡', 'success');
-        } catch { errEl.textContent = 'Could not connect to server.'; }
+          consumePendingCakeDesign();
+        } catch { errEl.textContent = CONN_ERR; }
         finally { btn.textContent = 'Create Account'; btn.disabled = false; }
       });
 
@@ -2394,7 +2665,7 @@
           }
           document.getElementById('cakeSuccess').style.display = '';
           showToast('Custom cake booking sent! ♡', 'success');
-        } catch { errEl.textContent = 'Could not connect to server.'; btn.textContent = 'Send My Request →'; btn.disabled = false; }
+        } catch { errEl.textContent = CONN_ERR; btn.textContent = 'Send My Request →'; btn.disabled = false; }
       });
 
       // ---------- Real product photos (served from /images by the backend) ----------
@@ -2575,8 +2846,7 @@
         const bookBtn = e.target.closest('[data-book]');
         if (bookBtn) {
           const p = products.find(x => x.id === bookBtn.getAttribute('data-book'));
-          if (p) prefillCakeModal(p);
-          cakeModalOpenHandler();
+          requestCakeDesigner(p || null);
         }
       });
 
@@ -2608,17 +2878,52 @@
       window.addEventListener('scroll', onScroll, { passive: true });
       onScroll();
 
-      // ---------- Scroll reveal ----------
-      const revealEls = document.querySelectorAll('.reveal');
-      if ('IntersectionObserver' in window) {
-        const io = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) { entry.target.classList.add('in'); io.unobserve(entry.target); }
+      // ---------- Scroll reveal (bulletproof progressive enhancement) ----------
+      // 1. Elements start VISIBLE by default (CSS only hides .js-armed ones).
+      // 2. We arm an element only if the IntersectionObserver provably works.
+      // 3. We verify each armed element within 1.2s — if its reveal never fired
+      //    (embedded browsers, extensions, anything), we show it anyway.
+      // Result: animations when possible, content ALWAYS. Nothing can vanish.
+      const revealEls = [...document.querySelectorAll('.reveal')];
+      const vh = window.innerHeight;
+      const io = ('IntersectionObserver' in window)
+        ? new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) { entry.target.classList.add('in'); io.unobserve(entry.target); }
+            });
+          }, { threshold: 0, rootMargin: '0px 0px -8% 0px' })
+        : null;
+
+      if (io) {
+        // Sanity probe: does this browser actually deliver callbacks?
+        let observerAlive = false;
+        const probe = new IntersectionObserver((entries) => {
+          if (entries.length) observerAlive = true;
+        }, { threshold: 0 });
+        const probeEl = document.createElement('div');
+        probeEl.style.cssText = 'position:absolute;width:1px;height:1px;top:0;left:0;pointer-events:none;';
+        document.body.appendChild(probeEl);
+        probe.observe(probeEl);
+
+        setTimeout(() => {
+          probe.disconnect();
+          probeEl.remove();
+          if (!observerAlive) return; // stay visible, skip the effect entirely
+          revealEls.forEach(el => {
+            const rect = el.getBoundingClientRect();
+            const alreadyInView = rect.top < vh * 0.92; // above-the-fold: never hide
+            if (alreadyInView) { el.classList.add('in'); return; }
+            el.classList.add('js-armed');
+            io.observe(el);
           });
-        }, { threshold: 0.15 });
-        revealEls.forEach(el => io.observe(el));
-      } else {
-        revealEls.forEach(el => el.classList.add('in'));
+          // Safety net: anything armed but still hidden after 1.2s on screen → reveal
+          setInterval(() => {
+            document.querySelectorAll('.reveal.js-armed:not(.in)').forEach(el => {
+              const r = el.getBoundingClientRect();
+              if (r.top < window.innerHeight * 0.96) el.classList.add('in');
+            });
+          }, 1200);
+        }, 120);
       }
 
       // ---------- Newsletter ----------

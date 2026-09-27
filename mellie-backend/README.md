@@ -28,6 +28,16 @@ npm start                 # http://localhost:4000
 
 ### Step A — create the cloud database (Turso, free)
 
+**Browser way (works on Windows, no CLI needed — recommended):**
+
+1. Sign up at **https://app.turso.tech** (free — "Continue with GitHub" is easiest)
+2. **Create Database** → name: `mellie` → region near your customers (e.g. Mumbai)
+3. Open the database → **Connect** → copy the **database URL** (`libsql://…`)
+   → this is `DATABASE_URL`
+4. Same page → **Generate Token** → copy → this is `DATABASE_AUTH_TOKEN`
+
+**CLI way (macOS/Linux, or Windows with WSL):**
+
 ```bash
 npm i -g @turso/cli
 turso auth signup
