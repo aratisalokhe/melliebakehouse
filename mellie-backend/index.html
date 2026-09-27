@@ -3003,7 +3003,9 @@
 
       // ====== BOOTSTRAP ======
       renderAuthArea();
-      resolveApiBase().then(loadProducts);
+      // Wait for the image version before first product render so cards are
+      // stamped correctly from the start — no second fetch of every photo.
+      (async () => { await resolveApiBase(); await new Promise(r => setTimeout(r, 0)); loadProducts(); })();
       updateFavCount();
 
       // ====== LIVE IMAGE SYNC ======
@@ -3012,11 +3014,16 @@
       // upload from the admin console). If the backend is unreachable, a one-time
       // unique stamp is used so the browser can never show a stale cached photo.
       function applyImgVersion() {
+        // Re-stamp ONLY images whose URL would actually change — re-setting an
+        // identical src still makes mobile browsers re-fetch the image (and
+        // lazy-loaded ones lose their load), which made photos pop out while
+        // scrolling on phones.
         document.querySelectorAll('img').forEach(im => {
           const raw = im.getAttribute('src') || '';
           if (!raw.includes('/images/') || raw.startsWith('data:')) return;
           const clean = raw.split('?')[0];
-          im.setAttribute('src', clean + '?v=' + imgVersion);
+          const next = clean + '?v=' + imgVersion;
+          if (raw !== next) im.setAttribute('src', next);
         });
       }
       function rerenderImages() {
@@ -3039,8 +3046,20 @@
         }
         if (version !== imgVersion) { imgVersion = version; rerenderImages(); }
       }
-      watchImageVersion();
-      setInterval(watchImageVersion, 10000);
+      // BOOT ORDER FIX: fetch the version FIRST, render ONCE with the final
+      // stamp. Previously the page rendered with ?v=0, then the version arrived
+      // and every image was re-stamped and re-fetched — on mobile connections
+      // that meant photos downloading twice and content appearing only after a
+      // manual refresh. Products still load via resolveApiBase().then(loadProducts).
+      (async function bootImages() {
+        await resolveApiBase();
+        try {
+          const r = await fetch(API + '/api/images-version', { cache: 'no-store' });
+          if (r.ok) { const j = await r.json(); if (j.version) imgVersion = j.version; }
+        } catch (_) { if (!imgVersion) imgVersion = Date.now(); }
+        rerenderImages();
+        setInterval(watchImageVersion, 10000);
+      })();
 
     })();
   </script>
