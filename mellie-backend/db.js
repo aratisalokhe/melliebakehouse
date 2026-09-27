@@ -48,15 +48,17 @@ function dirIsWritable(dir) {
 let db;
 let dbMode;
 
-// ---- Attempt 1: Turso cloud (libsql 0.5.x positional API: new Database(url, token))
-// (The object form { url, authToken } throws "failed to downcast any to string" on
-// this version — do not "fix" it back.)
+// ---- Attempt 1: Turso cloud.
+// libsql 0.5.x API: constructor(path, opts) where opts = { authToken }.
+// VERIFIED against node_modules/libsql/index.js lines 74–95: the token is read
+// from opts.authToken ONLY. A bare string as the 2nd argument is silently
+// ignored → the library sends an EMPTY token → Turso 401 "empty JWT token".
 if (DATABASE_URL && !DATABASE_URL.startsWith('file:')) {
   if (!DATABASE_AUTH_TOKEN) {
     console.warn('[db] DATABASE_URL is set but DATABASE_AUTH_TOKEN is missing — ignoring the cloud DB. Add the token, then redeploy.');
   } else {
     try {
-      const cloud = new Database(DATABASE_URL, DATABASE_AUTH_TOKEN);
+      const cloud = new Database(DATABASE_URL, { authToken: DATABASE_AUTH_TOKEN });
       // Force a real round-trip NOW: construction is lazy, so a bad URL/token
       // only surfaces on the first query. Better to know at boot.
       cloud.prepare('SELECT 1 AS ok').get();
